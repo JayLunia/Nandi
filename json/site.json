@@ -1,0 +1,167 @@
+{
+  "brand": {
+    "name": "NURA",
+    "logo": "14340495-cec3-4148-ad80-c19ca91f271d.JPG",
+    "footerCopy": "NURA is a jewelry display brand shaped around deep plum, champagne light, sculptural silhouettes, and small-batch statement pieces."
+  },
+  "hero": {
+    "eyebrow": "NURA Jewelry",
+    "title": "Light-cut jewels for unforgettable entrances.",
+    "titleLines": [
+      "Light-cut jewels",
+      "for unforgettable",
+      "entrances."
+    ],
+    "copy": "A cinematic ecommerce display for necklaces, cuffs, crystal details, and soft champagne glow.",
+    "primaryCta": "Shop the edit",
+    "secondaryCta": "View lookbook",
+    "slides": [
+      {
+        "kicker": "Hero piece",
+        "title": "Noir Fan Collar",
+        "copy": "Dark crystal drops and polished metal made for evening styling.",
+        "price": 118,
+        "status": "Limited",
+        "image": "defa1ea8-98a5-4aa4-b61e-7a90c1c58cb4.JPG"
+      },
+      {
+        "kicker": "Fresh arrival",
+        "title": "Citrine Garden Necklace",
+        "copy": "Warm yellow stones against a champagne display palette.",
+        "price": 132,
+        "status": "New",
+        "image": "eef6d1f9-7140-47db-8ad5-35833c2d76a2.JPG"
+      },
+      {
+        "kicker": "Atelier favorite",
+        "title": "Rose Drape Set",
+        "copy": "Layered rose-toned links with a sculptural necklace silhouette.",
+        "price": 148,
+        "status": "Few left",
+        "image": "aa4ef21d-5796-4539-b7d0-ae3dc36127ec.JPG"
+      }
+    ]
+  },
+  "marquee": [
+    "Small-batch jewelry",
+    "Gift-ready packaging",
+    "Statement necklaces",
+    "Layered bracelets",
+    "Soft champagne finish",
+    "Designed for evening light"
+  ],
+  "collections": [
+    {
+      "kicker": "Edit 01",
+      "title": "Midnight Shine",
+      "copy": "Deep crystals, antique silver tones, and pieces that hold the eye after dark.",
+      "image": "0c15bea5-a170-4347-81e1-e86890b31da9.JPG"
+    },
+    {
+      "kicker": "Edit 02",
+      "title": "Garden Light",
+      "copy": "Fresh green, citrine, and glass stones built for bright layered styling.",
+      "image": "de4f8541-e648-4d23-b3e3-783c9ac57c64.JPG"
+    },
+    {
+      "kicker": "Edit 03",
+      "title": "Moon Metal",
+      "copy": "Silver cuffs, crescent forms, and cool-toned pieces with a polished edge.",
+      "image": "c66811f6-06c7-4e4a-9f85-27142c3d36ba.JPG"
+    }
+  ],
+  "atelier": {
+    "eyebrow": "Atelier styling",
+    "title": "Build a display that feels like a jewel box.",
+    "copy": "The site uses the NURA logo palette as its foundation: deep plum for drama, champagne for softness, rose-gold warmth for highlights, and real product photography as the main visual material.",
+    "secondaryAlt": "NURA bracelet display",
+    "images": [
+      "54c56843-c267-4c73-b627-0de42d9a775a.JPG",
+      "37b3fa8b-c853-4719-9157-d0b97d945180.JPG"
+    ],
+    "stats": [
+      {
+        "value": "28",
+        "label": "pieces in this visual catalog"
+      },
+      {
+        "value": "4",
+        "label": "editable shopping categories"
+      },
+      {
+        "value": "100%",
+        "label": "content controlled from JSON"
+      }
+    ]
+  },
+  "services": [
+    {
+      "symbol": "N",
+      "title": "Private Styling",
+      "copy": "Pair necklaces, bracelets, and cuffs by mood, color, or occasion."
+    },
+    {
+      "symbol": "+",
+      "title": "Gift Finish",
+      "copy": "Every display message can be edited for seasonal drops, packaging, or promotions."
+    },
+    {
+      "symbol": "*",
+      "title": "Easy Updates",
+      "copy": "Add a product by placing an image in the folder and adding one object to products.json."
+    }
+  ],
+  "footerColumns": [
+    {
+      "title": "Explore",
+      "links": [
+        {
+          "label": "Collections",
+          "href": "#collections"
+        },
+        {
+          "label": "Shop",
+          "href": "#shop"
+        },
+        {
+          "label": "Lookbook",
+          "href": "#lookbook"
+        }
+      ]
+    },
+    {
+      "title": "Service",
+      "links": [
+        {
+          "label": "Private styling",
+          "href": "#atelier"
+        },
+        {
+          "label": "Gift options",
+          "href": "#newsletter"
+        },
+        {
+          "label": "Care guide",
+          "href": "#shop"
+        }
+      ]
+    },
+    {
+      "title": "Social",
+      "links": [
+        {
+          "label": "Instagram",
+          "href": "#"
+        },
+        {
+          "label": "Pinterest",
+          "href": "#"
+        },
+        {
+          "label": "Email",
+          "href": "mailto:hello@nura.example"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "categories": [
+    {
+      "id": "all",
+      "label": "All pieces"
+    },
+    {
+      "id": "necklaces",
+      "label": "Necklaces"
+    },
+    {
+      "id": "bracelets",
+      "label": "Bracelets"
+    },
+    {
+      "id": "earrings",
+      "label": "Earrings"
+    },
+    {
+      "id": "sets",
+      "label": "Sets"
+    }
+  ],
+  "products": [
+    {
+      "id": "noir-fan-collar",
+      "name": "Noir Fan Collar",
+      "category": "necklaces",
+      "categoryLabel": "Necklace",
+      "price": 118,
+      "featuredRank": 1,
+      "badge": "Hero",
+      "stock": "Limited",
+      "color": "Noir",
+      "materials": "Silver-tone chain, dark glass stones",
+      "description": "A dramatic dark-stone collar with sculptural fan drops.",
+      "longDescription": "A statement collar designed for evening light, pairing a clean chain line with dark glass drops that create a strong NURA silhouette.",
+      "image": "defa1ea8-98a5-4aa4-b61e-7a90c1c58cb4.JPG"
+    },
+    {
+      "id": "citrine-garden-necklace",
+      "name": "Citrine Garden Necklace",
+      "category": "necklaces",
+      "categoryLabel": "Necklace",
+      "price": 132,
+      "featuredRank": 2,
+      "badge": "New",
+      "stock": "New drop",
+      "color": "Citrine",
+      "materials": "Gold-tone chain, yellow floral stones",
+      "description": "A bright floral necklace with warm stones and polished links.",
+      "longDescription": "A warm, luminous necklace that brings garden color into a champagne-toned display. Best styled with clean necklines and soft gold accents.",
+      "image": "eef6d1f9-7140-47db-8ad5-35833c2d76a2.JPG"
+    },
+    {
+      "id": "rose-drape-set",
+      "name": "Rose Drape Set",
+      "category": "sets",
+      "categoryLabel": "Layered set",
+      "price": 148,
+      "featuredRank": 3,
+      "badge": "Rare",
+      "stock": "Few left",
+      "color": "Rose",
+      "materials": "Rose-tone links, faceted stones",
+      "description": "A layered necklace set with warm rose movement.",
+      "longDescription": "A layered statement set with rose-toned links and faceted stones, built to sit beautifully in a hero ecommerce display.",
+      "image": "aa4ef21d-5796-4539-b7d0-ae3dc36127ec.JPG"
+    },
+    {
+      "id": "amethyst-drop-collar",
+      "name": "Amethyst Drop Collar",
+      "category": "necklaces",
+      "categoryLabel": "Necklace",
+      "price": 125,
+      "featuredRank": 4,
+      "badge": "Edit",
+      "stock": "Ready",
+      "color": "Amethyst",
+      "materials": "Gold-tone chain, purple glass drops",
+      "description": "Purple crystal drops balanced on a delicate gold-tone chain.",
+      "longDescription": "A refined collar with deep purple drops, designed to echo the NURA brand color while keeping the styling light and elegant.",
+      "image": "0c15bea5-a170-4347-81e1-e86890b31da9.JPG"
+    },
+    {
+      "id": "pearl-moon-cuff",
+      "name": "Pearl Moon Cuff",
+      "category": "bracelets",
+      "categoryLabel": "Bracelet",
+      "price": 76,
+      "featuredRank": 5,
+      "badge": "Soft",
+      "stock": "Ready",
+      "color": "Pearl",
+      "materials": "Gold-tone cuff, pearl-style center",
+      "description": "A minimal cuff with a soft pearl-style focal point.",
+      "longDescription": "A clean, minimal cuff for quieter styling moments. The center pearl detail gives the piece a polished moonlit finish.",
+      "image": "3bb919da-6cef-40da-91c9-803728b4d0db.JPG"
+    },
+    {
+      "id": "bracelet-color-bar",
+      "name": "Color Bar Bracelet Stack",
+      "category": "bracelets",
+      "categoryLabel": "Bracelets",
+      "price": 92,
+      "featuredRank": 6,
+      "badge": "Stack",
+      "stock": "Ready",
+      "color": "Multi",
+      "materials": "Mixed beads, polished bracelet stack",
+      "description": "A display-ready bracelet stack with jewel-toned rows.",
+      "longDescription": "A colorful bracelet stack that adds retail energy to the page, perfect for showing how multiple pieces can be merchandised together.",
+      "image": "37b3fa8b-c853-4719-9157-d0b97d945180.JPG"
+    },
+    {
+      "id": "silver-sunburst-earrings",
+      "name": "Silver Sunburst Earrings",
+      "category": "earrings",
+      "categoryLabel": "Earrings",
+      "price": 64,
+      "featuredRank": 7,
+      "badge": "Glow",
+      "stock": "Ready",
+      "color": "Silver",
+      "materials": "Silver-tone hoops, blue and pearl-style centers",
+      "description": "Radiating earrings with sculptural metal rays.",
+      "longDescription": "Sunburst earrings in a cool silver finish, photographed as a set to give the ecommerce grid variety and shine.",
+      "image": "33f8bf11-8606-4fdc-9f3a-afa2c7e38002.JPG"
+    },
+    {
+      "id": "moon-phase-cuffs",
+      "name": "Moon Phase Cuffs",
+      "category": "bracelets",
+      "categoryLabel": "Cuffs",
+      "price": 84,
+      "featuredRank": 8,
+      "badge": "Moon",
+      "stock": "Limited",
+      "color": "Silver",
+      "materials": "Silver-tone cuffs, moon-shaped settings",
+      "description": "Crescent-inspired cuffs for a cooler metal mood.",
+      "longDescription": "A moon-phase cuff assortment that works well for the NURA celestial accent language and a high-contrast gallery layout.",
+      "image": "c66811f6-06c7-4e4a-9f85-27142c3d36ba.JPG"
+    },
+    {
+      "id": "green-crystal-strand",
+      "name": "Green Crystal Strand",
+      "category": "necklaces",
+      "categoryLabel": "Necklace",
+      "price": 122,
+      "featuredRank": 9,
+      "badge": "Garden",
+      "stock": "Ready",
+      "color": "Green",
+      "materials": "Gold-tone chain, green stones",
+      "description": "A fresh green strand with a delicate stone cluster.",
+      "longDescription": "A lighter necklace with green stones and a warm chain finish, made to balance the deep plum brand palette with a garden note.",
+      "image": "de4f8541-e648-4d23-b3e3-783c9ac57c64.JPG"
+    },
+    {
+      "id": "smoke-crystal-bracelets",
+      "name": "Smoke Crystal Bracelets",
+      "category": "bracelets",
+      "categoryLabel": "Bracelets",
+      "price": 88,
+      "featuredRank": 10,
+      "badge": "Noir",
+      "stock": "Ready",
+      "color": "Smoke",
+      "materials": "Smoky beads, silver-tone closures",
+      "description": "A smoky bracelet trio with glassy depth.",
+      "longDescription": "A moody bracelet set with smoky stones and a clean vertical product shot for a strong catalog rhythm.",
+      "image": "a32157c5-5c76-4e8d-9be1-18f4b1a4ad88.JPG"
+    },
+    {
+      "id": "rainbow-strand-edit",
+      "name": "Rainbow Strand Edit",
+      "category": "sets",
+      "categoryLabel": "Strand set",
+      "price": 104,
+      "featuredRank": 11,
+      "badge": "Color",
+      "stock": "Ready",
+      "color": "Multi",
+      "materials": "Mixed color stones, silver-tone chains",
+      "description": "A colorful strand set for merchandising by shade.",
+      "longDescription": "An easy-to-edit set listing for multicolor strands. Use it when you want the storefront to feel abundant and playful.",
+      "image": "3698965a-7f38-431c-b3cf-3132397a07e1.JPG"
+    },
+    {
+      "id": "full-atelier-tray",
+      "name": "Full Atelier Tray",
+      "category": "sets",
+      "categoryLabel": "Full edit",
+      "price": 210,
+      "featuredRank": 12,
+      "badge": "Showcase",
+      "stock": "Display",
+      "color": "Assorted",
+      "materials": "Mixed display collection",
+      "description": "A full product tray for editorial and display moments.",
+      "longDescription": "A complete visual tray built for the lookbook, wholesale, or homepage feature sections. Replace the text with your exact collection details anytime.",
+      "image": "7bac9b3f-d4c6-4c7b-b6d9-d603f362c15d.JPG"
+    }
+  ],
+  "lookbook": [
+    {
+      "title": "The Full Tray",
+      "caption": "A merchandised view of necklace, bracelet, and earring options.",
+      "image": "7bac9b3f-d4c6-4c7b-b6d9-d603f362c15d.JPG"
+    },
+    {
+      "title": "Window Light",
+      "caption": "Necklaces styled in soft natural light for a premium product feel.",
+      "image": "54c56843-c267-4c73-b627-0de42d9a775a.JPG"
+    },
+    {
+      "title": "Crystal Rows",
+      "caption": "Colorful strands arranged for quick shade comparison.",
+      "image": "4414665b-23c7-4365-a617-f62e47ed218c.JPG"
+    },
+    {
+      "title": "Bracelet Studio",
+      "caption": "Stacks and cuffs with enough space for editorial copy overlays.",
+      "image": "923d2b7d-5e84-4326-8743-2de1401bbcfe.JPG"
+    },
+    {
+      "title": "Earring Constellation",
+      "caption": "Circular forms and reflective stones arranged like a jewel map.",
+      "image": "e573ae0f-037d-4f49-93cd-b48136f976e8.JPG"
+    },
+    {
+      "title": "Hanging Charms",
+      "caption": "A delicate line of drops for a lighter visual finish.",
+      "image": "ec3538db-e2a6-4815-ad6b-ad47af32143d.JPG"
+    }
+  ]
+}

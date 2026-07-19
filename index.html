@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="NURA is a jewelry ecommerce showcase with animated collections, editable JSON content, and polished product displays."
+    />
+    <title>NURA Jewelry | Light-Cut Statement Pieces</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/jquery-3.7.1.min.js" defer></script>
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
+    <div class="loader" id="loader" aria-hidden="true">
+      <img src="14340495-cec3-4148-ad80-c19ca91f271d.JPG" alt="" />
+      <span></span>
+    </div>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <header class="site-header" id="siteHeader">
+      <a class="brand-mark" href="#home" aria-label="NURA home">
+        <img
+          src="14340495-cec3-4148-ad80-c19ca91f271d.JPG"
+          alt="NURA logo"
+        />
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#collections">Collections</a>
+        <a href="#shop">Shop</a>
+        <a href="#atelier">Atelier</a>
+        <a href="#lookbook">Lookbook</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button search-toggle" type="button" aria-label="Open search">
+          <span></span>
+        </button>
+        <button class="cart-button" type="button" id="openCart" aria-label="Open cart">
+          <span class="cart-dot" id="cartCount">0</span>
+          Bag
+        </button>
+        <button class="menu-toggle" type="button" id="menuToggle" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+      <a href="#collections">Collections</a>
+      <a href="#shop">Shop</a>
+      <a href="#atelier">Atelier</a>
+      <a href="#lookbook">Lookbook</a>
+    </aside>
+
+    <div class="search-panel" id="searchPanel" aria-label="Product search">
+      <label for="searchInput">Search NURA pieces</label>
+      <div>
+        <input id="searchInput" type="search" placeholder="Try necklace, bracelet, moon..." />
+        <button type="button" id="clearSearch">Clear</button>
+      </div>
+    </div>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-stars" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="hero-content reveal">
+          <p class="eyebrow" id="heroEyebrow">NURA Jewelry</p>
+          <h1 id="heroTitle">Jewelry that turns light into a signature.</h1>
+          <p id="heroCopy">
+            Sculptural pieces, gemstone details, and a dramatic plum-and-gold world built for statement dressing.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#shop">Shop the edit</a>
+            <a class="secondary-link" href="#lookbook">View lookbook</a>
+          </div>
+        </div>
+
+        <div class="hero-showcase reveal" id="heroShowcase" aria-label="Featured jewelry"></div>
+      </section>
+
+      <section class="marquee-band" aria-label="Brand highlights">
+        <div class="marquee-track" id="marqueeTrack"></div>
+      </section>
+
+      <section class="section-shell intro-panel reveal" id="collections">
+        <div class="section-heading">
+          <p class="eyebrow">The NURA edits</p>
+          <h2>Curated moods for every entrance.</h2>
+        </div>
+        <div class="collection-grid" id="collectionGrid"></div>
+      </section>
+
+      <section class="split-feature reveal" id="atelier">
+        <div class="feature-copy">
+          <p class="eyebrow" id="atelierEyebrow">Atelier note</p>
+          <h2 id="atelierTitle">Layer shine with intention.</h2>
+          <p id="atelierCopy"></p>
+          <div class="feature-stats" id="atelierStats"></div>
+        </div>
+        <div class="feature-stage" id="atelierStage"></div>
+      </section>
+
+      <section class="shop-section section-shell" id="shop">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Shop signature pieces</p>
+          <h2>Editable products, animated display.</h2>
+        </div>
+
+        <div class="shop-toolbar reveal">
+          <div class="filter-pills" id="filterPills" aria-label="Product filters"></div>
+          <select id="sortProducts" aria-label="Sort products">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price low to high</option>
+            <option value="price-high">Price high to low</option>
+            <option value="name">Name A to Z</option>
+          </select>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+      </section>
+
+      <section class="lookbook-section" id="lookbook">
+        <div class="section-shell">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Lookbook</p>
+            <h2>Product photography becomes the storefront.</h2>
+          </div>
+          <div class="lookbook-grid" id="lookbookGrid"></div>
+        </div>
+      </section>
+
+      <section class="section-shell service-section reveal">
+        <div class="service-grid" id="serviceGrid"></div>
+      </section>
+
+      <section class="newsletter-section reveal" id="newsletter">
+        <div>
+          <p class="eyebrow">Private drop list</p>
+          <h2>Get first access to new NURA edits.</h2>
+        </div>
+        <form class="newsletter-form" id="newsletterForm">
+          <label class="sr-only" for="emailInput">Email address</label>
+          <input id="emailInput" type="email" placeholder="Email address" required />
+          <button type="submit">Join</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="siteFooter"></footer>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping bag">
+      <div class="cart-head">
+        <div>
+          <p class="eyebrow">Your edit</p>
+          <h2>Shopping bag</h2>
+        </div>
+        <button type="button" id="closeCart" aria-label="Close cart">&times;</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cartTotal">$0</strong>
+      </div>
+      <button class="checkout-button" type="button">Request checkout</button>
+    </aside>
+    <div class="page-scrim" id="pageScrim"></div>
+
+    <dialog class="quick-view" id="quickView">
+      <button class="modal-close" type="button" id="closeQuickView" aria-label="Close quick view">
+        &times;
+      </button>
+      <div class="quick-view-body" id="quickViewBody"></div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
