@@ -207,31 +207,37 @@
     {
       "title": "The Full Tray",
       "caption": "A merchandised view of necklace, bracelet, and earring options.",
+      "targetProduct": "full-atelier-tray",
       "image": "7bac9b3f-d4c6-4c7b-b6d9-d603f362c15d.JPG"
     },
     {
       "title": "Window Light",
       "caption": "Necklaces styled in soft natural light for a premium product feel.",
+      "targetProduct": "amethyst-drop-collar",
       "image": "54c56843-c267-4c73-b627-0de42d9a775a.JPG"
     },
     {
       "title": "Crystal Rows",
       "caption": "Colorful strands arranged for quick shade comparison.",
+      "targetProduct": "rainbow-strand-edit",
       "image": "4414665b-23c7-4365-a617-f62e47ed218c.JPG"
     },
     {
       "title": "Bracelet Studio",
       "caption": "Stacks and cuffs with enough space for editorial copy overlays.",
+      "targetProduct": "bracelet-color-bar",
       "image": "923d2b7d-5e84-4326-8743-2de1401bbcfe.JPG"
     },
     {
       "title": "Earring Constellation",
       "caption": "Circular forms and reflective stones arranged like a jewel map.",
+      "targetProduct": "silver-sunburst-earrings",
       "image": "e573ae0f-037d-4f49-93cd-b48136f976e8.JPG"
     },
     {
       "title": "Hanging Charms",
       "caption": "A delicate line of drops for a lighter visual finish.",
+      "targetProduct": "moon-phase-cuffs",
       "image": "ec3538db-e2a6-4815-ad6b-ad47af32143d.JPG"
     }
   ]

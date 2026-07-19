@@ -566,10 +566,16 @@ h1 span {
   min-width: 0;
 }
 
-.hero-card img {
+.hero-image-link {
+  display: block;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.hero-card img,
+.hero-image-link img {
   width: 100%;
   height: 126px;
-  border-radius: 18px;
   object-fit: cover;
 }
 
@@ -708,12 +714,22 @@ h1 span {
 
 .collection-card {
   position: relative;
+  display: block;
   min-height: 440px;
   overflow: hidden;
   border-radius: 8px;
   color: var(--champagne);
+  text-decoration: none;
   background: var(--plum);
   box-shadow: var(--shadow);
+}
+
+.collection-card:focus-visible,
+.lookbook-tile:focus-visible,
+.hero-image-link:focus-visible,
+.product-image-button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
 }
 
 .collection-card img {
@@ -873,6 +889,29 @@ h1 span {
   margin-bottom: 28px;
 }
 
+.shop-controls {
+  display: flex;
+  min-width: min(480px, 100%);
+  gap: 10px;
+  align-items: center;
+}
+
+.shop-search.form-control,
+.shop-toolbar .form-select {
+  min-height: 46px;
+  border: 1px solid rgba(51, 0, 37, 0.12);
+  border-radius: 999px;
+  color: var(--plum);
+  background-color: #fff;
+  box-shadow: none;
+}
+
+.shop-search.form-control:focus,
+.shop-toolbar .form-select:focus {
+  border-color: var(--plum);
+  box-shadow: 0 0 0 0.2rem rgba(51, 0, 37, 0.12);
+}
+
 .filter-pills {
   display: flex;
   flex-wrap: wrap;
@@ -943,14 +982,35 @@ h1 span {
   box-shadow: 0 28px 70px rgba(52, 0, 37, 0.18);
 }
 
+.product-card.spotlight {
+  border-color: rgba(216, 181, 109, 0.85);
+  box-shadow: 0 0 0 4px rgba(216, 181, 109, 0.2), 0 32px 80px rgba(52, 0, 37, 0.24);
+}
+
 .product-media {
   position: relative;
   aspect-ratio: 0.82;
   overflow: hidden;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
   background: #f0e7e0;
 }
 
-.product-media img {
+.product-image-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.product-media img,
+.product-image-button img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1088,9 +1148,12 @@ h1 span {
 
 .lookbook-tile {
   position: relative;
+  display: block;
   overflow: hidden;
   border: 1px solid rgba(246, 233, 220, 0.12);
   border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
   background: rgba(246, 233, 220, 0.08);
 }
 
@@ -1785,6 +1848,16 @@ h1 span {
   .shop-toolbar {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .shop-controls {
+    min-width: 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .shop-search.form-control {
+    width: 100%;
   }
 
   .shop-toolbar select {

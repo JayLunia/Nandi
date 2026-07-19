@@ -8,6 +8,7 @@
       content="NURA is a jewelry ecommerce showcase with animated collections, editable JSON content, and polished product displays."
     />
     <title>NURA Jewelry | Light-Cut Statement Pieces</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/jquery-3.7.1.min.js" defer></script>
     <script src="js/main.js" defer></script>
@@ -123,12 +124,21 @@
 
         <div class="shop-toolbar reveal">
           <div class="filter-pills" id="filterPills" aria-label="Product filters"></div>
-          <select id="sortProducts" aria-label="Sort products">
-            <option value="featured">Featured</option>
-            <option value="price-low">Price low to high</option>
-            <option value="price-high">Price high to low</option>
-            <option value="name">Name A to Z</option>
-          </select>
+          <div class="shop-controls">
+            <label class="sr-only" for="shopSearchInput">Search products</label>
+            <input
+              class="form-control shop-search"
+              id="shopSearchInput"
+              type="search"
+              placeholder="Search products"
+            />
+            <select class="form-select" id="sortProducts" aria-label="Sort products">
+              <option value="featured">Featured</option>
+              <option value="price-low">Price low to high</option>
+              <option value="price-high">Price high to low</option>
+              <option value="name">Name A to Z</option>
+            </select>
+          </div>
         </div>
 
         <div class="product-grid" id="productGrid"></div>

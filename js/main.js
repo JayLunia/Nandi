@@ -1,4 +1,7 @@
 $(function () {
+  const CART_KEY = "nura-cart";
+  const FAVORITES_KEY = "nura-favorites";
+
   const state = {
     site: null,
     products: [],
@@ -8,8 +11,8 @@ $(function () {
     searchTerm: "",
     sort: "featured",
     heroIndex: 0,
-    cart: JSON.parse(localStorage.getItem("nura-cart") || "[]"),
-    favorites: JSON.parse(localStorage.getItem("nura-favorites") || "[]")
+    cart: readStorage(CART_KEY, []),
+    favorites: readStorage(FAVORITES_KEY, [])
   };
 
   const formatPrice = (price) =>
@@ -75,14 +78,14 @@ $(function () {
       site.collections
         .map(
           (item) => `
-            <article class="collection-card">
+            <a class="collection-card" href="#shop" data-shop-category="${escapeHtml(item.targetCategory || "all")}">
               <img src="${imageUrl(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy">
               <div>
                 <p class="eyebrow">${escapeHtml(item.kicker)}</p>
                 <h3>${escapeHtml(item.title)}</h3>
                 <p>${escapeHtml(item.copy)}</p>
               </div>
-            </article>
+            </a>
           `
         )
         .join("")
@@ -105,25 +108,25 @@ $(function () {
     );
     $("#atelierStage").html(`
       <div class="orbit-line" aria-hidden="true"></div>
-      <figure class="floating-piece large">
+      <a class="floating-piece large" href="#shop" data-shop-product="amethyst-drop-collar">
         <img src="${imageUrl(site.atelier.images[0])}" alt="${escapeHtml(site.atelier.title)}" loading="lazy">
-      </figure>
-      <figure class="floating-piece small">
+      </a>
+      <a class="floating-piece small" href="#shop" data-shop-product="bracelet-color-bar">
         <img src="${imageUrl(site.atelier.images[1])}" alt="${escapeHtml(site.atelier.secondaryAlt)}" loading="lazy">
-      </figure>
+      </a>
     `);
 
     $("#lookbookGrid").html(
       state.lookbook
         .map(
           (item) => `
-            <article class="lookbook-tile reveal">
+            <a class="lookbook-tile reveal" href="#shop" data-shop-product="${escapeHtml(item.targetProduct || "")}">
               <img src="${imageUrl(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy">
               <div>
                 <h3>${escapeHtml(item.title)}</h3>
                 <p>${escapeHtml(item.caption)}</p>
               </div>
-            </article>
+            </a>
           `
         )
         .join("")
@@ -172,7 +175,9 @@ $(function () {
     $("#heroBg").css("background-image", `url("${slide.image}")`);
     $("#heroShowcase").html(`
       <article class="hero-card">
-        <img src="${imageUrl(slide.image)}" alt="${escapeHtml(slide.title)}">
+        <a class="hero-image-link" href="#shop" data-shop-product="${escapeHtml(slide.targetProduct || "")}">
+          <img src="${imageUrl(slide.image)}" alt="${escapeHtml(slide.title)}">
+        </a>
         <div>
           <p class="eyebrow">${escapeHtml(slide.kicker)}</p>
           <h3>${escapeHtml(slide.title)}</h3>
@@ -220,7 +225,17 @@ $(function () {
       const filterMatch = state.activeFilter === "all" || product.category === state.activeFilter;
       const searchMatch =
         !term ||
-        [product.name, product.category, product.description, product.materials, product.color]
+        [
+          product.name,
+          product.category,
+          product.categoryLabel,
+          product.description,
+          product.longDescription,
+          product.materials,
+          product.color,
+          product.badge,
+          product.stock
+        ]
           .join(" ")
           .toLowerCase()
           .includes(term);
@@ -253,9 +268,11 @@ $(function () {
       products
         .map(
           (product) => `
-            <article class="product-card" data-id="${escapeHtml(product.id)}">
+            <article class="product-card card" data-id="${escapeHtml(product.id)}">
               <div class="product-media">
-                <img src="${imageUrl(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy">
+                <button class="product-image-button" type="button" data-quick="${escapeHtml(product.id)}" aria-label="View ${escapeHtml(product.name)}">
+                  <img src="${imageUrl(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy">
+                </button>
                 <span class="badge">${escapeHtml(product.badge)}</span>
                 <button class="favorite-toggle ${
                   state.favorites.includes(product.id) ? "active" : ""
@@ -301,6 +318,8 @@ $(function () {
 
     $(document).on("click", ".filter-pill", function () {
       state.activeFilter = $(this).data("filter");
+      state.searchTerm = "";
+      syncSearchInputs();
       renderFilters();
       renderProducts();
       revealOnScroll();
@@ -311,14 +330,15 @@ $(function () {
       renderProducts();
     });
 
-    $("#searchInput").on("input", function () {
+    $("#searchInput, #shopSearchInput").on("input", function () {
       state.searchTerm = $(this).val();
+      syncSearchInputs(this);
       renderProducts();
     });
 
     $("#clearSearch").on("click", function () {
       state.searchTerm = "";
-      $("#searchInput").val("");
+      syncSearchInputs();
       renderProducts();
     });
 
@@ -342,11 +362,27 @@ $(function () {
     });
 
     $(document).on("click", "[data-quick]", function () {
+      if ($(this).is(".product-image-button")) {
+        $(this).closest(".product-card").addClass("image-clicked");
+      }
       openQuickView($(this).data("quick"));
     });
 
-    $(document).on("click", "[data-favorite]", function () {
+    $(document).on("click", "[data-favorite]", function (event) {
+      event.stopPropagation();
       toggleFavorite($(this).data("favorite"));
+    });
+
+    $(document).on("click", "[data-shop-product]", function (event) {
+      const productId = $(this).data("shop-product");
+      if (!productId) return;
+      event.preventDefault();
+      showProductInShop(productId);
+    });
+
+    $(document).on("click", "[data-shop-category]", function (event) {
+      event.preventDefault();
+      showCategoryInShop($(this).data("shop-category"));
     });
 
     $(document).on("mousemove", ".product-card", function (event) {
@@ -406,6 +442,9 @@ $(function () {
   }
 
   function addToCart(productId) {
+    const product = findProduct(productId);
+    if (!product) return;
+
     const existing = state.cart.find((item) => item.id === productId);
     if (existing) {
       existing.quantity += 1;
@@ -414,7 +453,6 @@ $(function () {
     }
     persistCart();
     updateCart();
-    const product = findProduct(productId);
     showToast(`${product.name} added to bag.`);
   }
 
@@ -482,7 +520,7 @@ $(function () {
     } else {
       state.favorites.push(productId);
     }
-    localStorage.setItem("nura-favorites", JSON.stringify(state.favorites));
+    writeStorage(FAVORITES_KEY, state.favorites);
     renderProducts();
   }
 
@@ -526,7 +564,8 @@ $(function () {
   }
 
   function persistCart() {
-    localStorage.setItem("nura-cart", JSON.stringify(state.cart));
+    state.cart = state.cart.filter((item) => item && item.id && item.quantity > 0);
+    writeStorage(CART_KEY, state.cart);
   }
 
   function findProduct(productId) {
@@ -538,6 +577,66 @@ $(function () {
     toast.text(message).addClass("show");
     window.clearTimeout(showToast.timer);
     showToast.timer = window.setTimeout(() => toast.removeClass("show"), 2200);
+  }
+
+  function showProductInShop(productId) {
+    const product = findProduct(productId);
+    if (!product) return;
+
+    state.activeFilter = "all";
+    state.searchTerm = "";
+    syncSearchInputs();
+    renderFilters();
+    renderProducts();
+    scrollToShop();
+
+    window.setTimeout(() => {
+      const card = $(`[data-id="${productId}"]`);
+      card.addClass("spotlight");
+      window.setTimeout(() => card.removeClass("spotlight"), 1800);
+    }, 260);
+  }
+
+  function showCategoryInShop(categoryId) {
+    state.activeFilter = categoryId || "all";
+    state.searchTerm = "";
+    syncSearchInputs();
+    renderFilters();
+    renderProducts();
+    scrollToShop();
+  }
+
+  function scrollToShop() {
+    const targetTop = Math.max(0, $("#shop").offset().top - 92);
+    $("html, body").stop(true).animate({ scrollTop: targetTop }, 550);
+  }
+
+  function syncSearchInputs(source) {
+    const inputs = $("#searchInput, #shopSearchInput");
+    if (source) {
+      inputs.not(source).val(state.searchTerm);
+      return;
+    }
+    inputs.val(state.searchTerm);
+  }
+
+  function readStorage(key, fallback) {
+    try {
+      const value = localStorage.getItem(key);
+      if (!value) return fallback;
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : fallback;
+    } catch (error) {
+      return fallback;
+    }
+  }
+
+  function writeStorage(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      showToast("Your browser blocked saving this bag.");
+    }
   }
 
   function escapeHtml(value) {

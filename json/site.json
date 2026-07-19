@@ -22,6 +22,7 @@
         "copy": "Dark crystal drops and polished metal made for evening styling.",
         "price": 118,
         "status": "Limited",
+        "targetProduct": "noir-fan-collar",
         "image": "defa1ea8-98a5-4aa4-b61e-7a90c1c58cb4.JPG"
       },
       {
@@ -30,6 +31,7 @@
         "copy": "Warm yellow stones against a champagne display palette.",
         "price": 132,
         "status": "New",
+        "targetProduct": "citrine-garden-necklace",
         "image": "eef6d1f9-7140-47db-8ad5-35833c2d76a2.JPG"
       },
       {
@@ -38,6 +40,7 @@
         "copy": "Layered rose-toned links with a sculptural necklace silhouette.",
         "price": 148,
         "status": "Few left",
+        "targetProduct": "rose-drape-set",
         "image": "aa4ef21d-5796-4539-b7d0-ae3dc36127ec.JPG"
       }
     ]
@@ -55,18 +58,21 @@
       "kicker": "Edit 01",
       "title": "Midnight Shine",
       "copy": "Deep crystals, antique silver tones, and pieces that hold the eye after dark.",
+      "targetCategory": "necklaces",
       "image": "0c15bea5-a170-4347-81e1-e86890b31da9.JPG"
     },
     {
       "kicker": "Edit 02",
       "title": "Garden Light",
       "copy": "Fresh green, citrine, and glass stones built for bright layered styling.",
+      "targetCategory": "necklaces",
       "image": "de4f8541-e648-4d23-b3e3-783c9ac57c64.JPG"
     },
     {
       "kicker": "Edit 03",
       "title": "Moon Metal",
       "copy": "Silver cuffs, crescent forms, and cool-toned pieces with a polished edge.",
+      "targetCategory": "bracelets",
       "image": "c66811f6-06c7-4e4a-9f85-27142c3d36ba.JPG"
     }
   ],
