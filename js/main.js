@@ -286,8 +286,8 @@ $(function () {
             <div class="footer-column">
               <h3>${escapeHtml(column.title)}</h3>
               ${(column.links || [])
-                .map((link) => `<a href="${safeHref(link.href)}">${escapeHtml(link.label)}</a>`)
-                .join("")}
+              .map((link) => `<a href="${safeHref(link.href)}">${escapeHtml(link.label)}</a>`)
+              .join("")}
             </div>
           `
         )
@@ -313,13 +313,12 @@ $(function () {
           <p>${escapeHtml(slide.copy)}</p>
           <div class="slide-controls">
             ${slides
-              .map(
-                (_, slideIndex) =>
-                  `<button class="slide-dot ${slideIndex === index ? "active" : ""}" type="button" data-slide="${slideIndex}" aria-label="Show hero slide ${
-                    slideIndex + 1
-                  }"></button>`
-              )
-              .join("")}
+        .map(
+          (_, slideIndex) =>
+            `<button class="slide-dot ${slideIndex === index ? "active" : ""}" type="button" data-slide="${slideIndex}" aria-label="Show hero slide ${slideIndex + 1
+            }"></button>`
+        )
+        .join("")}
           </div>
         </div>
       </article>
@@ -339,8 +338,7 @@ $(function () {
       state.categories
         .map(
           (category) => `
-            <button class="filter-pill ${
-              category.id === state.activeFilter ? "active" : ""
+            <button class="filter-pill ${category.id === state.activeFilter ? "active" : ""
             }" type="button" data-filter="${escapeHtml(category.id)}">
               ${escapeHtml(category.label)}
             </button>
@@ -430,12 +428,10 @@ $(function () {
                   <span>${escapeHtml(product.color)}</span>
                 </div>
                 <div class="product-actions">
-                  <button class="add-to-bag" type="button" data-add="${escapeHtml(product.id)}" ${
-            isAvailable ? "" : "disabled"
-          }>Add to bag</button>
-                  <button class="buy-now" type="button" data-buy="${escapeHtml(product.id)}" ${
-            isAvailable ? "" : "disabled"
-          }>Buy now</button>
+                  <button class="add-to-bag" type="button" data-add="${escapeHtml(product.id)}" ${isAvailable ? "" : "disabled"
+            }>Add to bag</button>
+                  <button class="buy-now" type="button" data-buy="${escapeHtml(product.id)}" ${isAvailable ? "" : "disabled"
+            }>Buy now</button>
                   <a class="quick-open" href="${productHref(product.id)}" data-product-link="${escapeHtml(product.id)}">View</a>
                 </div>
               </div>
@@ -738,9 +734,8 @@ $(function () {
                   <button type="button" data-increase="${escapeHtml(line.product.id)}">+</button>
                 </div>
               </div>
-              <button class="remove-line" type="button" data-remove="${escapeHtml(line.product.id)}" aria-label="Remove ${
-            escapeHtml(line.product.name)
-          }">&times;</button>
+              <button class="remove-line" type="button" data-remove="${escapeHtml(line.product.id)}" aria-label="Remove ${escapeHtml(line.product.name)
+            }">&times;</button>
             </article>
           `
         )
@@ -781,12 +776,10 @@ $(function () {
           <div><span>Care</span><strong>${escapeHtml(product.care || "Confirm care details on WhatsApp.")}</strong></div>
         </div>
         <div class="quick-actions">
-          <button class="add-to-bag" type="button" data-add="${escapeHtml(product.id)}" ${
-            product.available !== false ? "" : "disabled"
-          }>Add to bag</button>
-          <button class="buy-now" type="button" data-buy="${escapeHtml(product.id)}" ${
-            product.available !== false ? "" : "disabled"
-          }>Buy now</button>
+          <button class="add-to-bag" type="button" data-add="${escapeHtml(product.id)}" ${product.available !== false ? "" : "disabled"
+      }>Add to bag</button>
+          <button class="buy-now" type="button" data-buy="${escapeHtml(product.id)}" ${product.available !== false ? "" : "disabled"
+      }>Buy now</button>
           <a href="${productHref(product.id)}" data-product-link="${escapeHtml(product.id)}">View product</a>
         </div>
       </div>
@@ -1151,8 +1144,8 @@ $(function () {
           product.available === false
             ? "https://schema.org/OutOfStock"
             : product.stock === "Limited" || product.stock === "Few left"
-            ? "https://schema.org/LimitedAvailability"
-            : "https://schema.org/InStock",
+              ? "https://schema.org/LimitedAvailability"
+              : "https://schema.org/InStock",
         url: productLink(product)
       }
     }));
