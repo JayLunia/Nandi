@@ -58,7 +58,7 @@ window.NURA_SITE_DATA = {
     "Everyday wear and special occasions",
     "Necklaces, bracelets, earrings and pendants",
     "Meaningful gifting",
-    "Process-led small brand",
+    "Small brand details",
     "Designed to be worn, loved and lived in"
   ],
   "about": {
@@ -103,8 +103,8 @@ window.NURA_SITE_DATA = {
     }
   ],
   "process": {
-    "eyebrow": "Process",
-    "title": "Selected, styled and shared with intention.",
+    "eyebrow": "How it works",
+    "title": "Choose, style and order with ease.",
     "steps": [
       {
         "title": "Select",
@@ -132,15 +132,15 @@ window.NURA_SITE_DATA = {
     "stats": [
       {
         "value": "12",
-        "label": "curated product listings"
+        "label": "beautiful styles to explore"
       },
       {
         "value": "6",
-        "label": "boho jewellery categories"
+        "label": "easy jewellery moods"
       },
       {
         "value": "100%",
-        "label": "easy-to-browse jewellery edit"
+        "label": "gift-ready feeling"
       }
     ]
   },
@@ -153,24 +153,24 @@ window.NURA_SITE_DATA = {
     {
       "symbol": "+",
       "title": "UPI Payment Ready",
-      "copy": "The cart includes a direct UPI payment section with an editable QR image and UPI ID configuration for India."
+      "copy": "After your order is confirmed, you can pay easily through UPI and share the payment confirmation with NURA."
     },
     {
       "symbol": "*",
-      "title": "Guided Product Details",
-      "copy": "Each product can show clear photos, pricing, styling notes and care details so customers can choose with confidence."
+      "title": "Simple Product Details",
+      "copy": "Each piece includes the price, style notes and care details so you can choose jewellery with confidence."
     }
   ],
   "trust": {
     "eyebrow": "Worn, loved and shared",
-    "title": "Trust grows through real products, process and customer moments.",
-    "copy": "NURA's content pillars include products, process, display, behind-the-scenes moments, happy customers and happy faces. Add real customer photos, order screenshots, display images and short customer notes here as they become available.",
+    "title": "Made to feel honest, easy and personal.",
+    "copy": "NURA keeps shopping simple. You can see each piece clearly, ask questions on WhatsApp, confirm your order before dispatch and choose jewellery that feels right for your style or gift.",
     "badges": [
-      "WhatsApp order support",
+      "WhatsApp order help",
       "UPI payment option",
-      "Customer confirmation before dispatch",
-      "Real product photography",
-      "Clear product details"
+      "Order confirmed before dispatch",
+      "Clear product view",
+      "Simple product details"
     ]
   },
   "faqs": [
@@ -217,7 +217,7 @@ window.NURA_SITE_DATA = {
       "title": "Community",
       "links": [
         {
-          "label": "Process",
+          "label": "How it works",
           "href": "story.html#process"
         },
         {

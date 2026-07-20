@@ -2,7 +2,7 @@
 
 NURA is a fashion jewellery brand created for people who love expressive, wearable pieces with a soft boho spirit. The brand brings together crystal-inspired details, layered textures, statement charms, and everyday styling so jewellery can feel personal, meaningful, and easy to wear.
 
-NURA is designed for modern wardrobes: jewellery that can move from casual daily outfits to festive moments, gifting occasions, travel looks, and styled photoshoots. Each piece is presented with real product imagery so customers can understand the shape, colour, finish, and styling mood before they choose.
+NURA is designed for modern wardrobes: jewellery that can move from casual daily outfits to festive moments, gifting occasions, travel looks, and personal styling. Each piece is presented in a simple way so customers can understand the shape, colour, finish, and styling mood before they choose.
 
 ## Brand Essence
 
@@ -24,7 +24,7 @@ Each product is selected to support styling, gifting, and self-expression rather
 
 ## Aesthetic
 
-The NURA look is soft, polished, and expressive. It combines neutral luxury tones, warm metallic details, crystal-inspired accents, and product-focused photography. The brand avoids a loud or overly commercial look and instead presents jewellery in a calm, elegant, and attractive way.
+The NURA look is soft, polished, and expressive. It combines neutral luxury tones, warm metallic details, crystal-inspired accents, and easy styling ideas. The brand avoids a loud or overly commercial look and instead presents jewellery in a calm, elegant, and attractive way.
 
 The visual style is inspired by:
 
@@ -74,7 +74,7 @@ Good care helps fashion jewellery maintain its shine, finish, and shape.
 
 ## Brand Voice
 
-NURA speaks in a tone that is elegant, warm, simple, and trustworthy. The brand is not overly technical or exaggerated. It focuses on real product beauty, styling confidence, and meaningful personal details.
+NURA speaks in a tone that is elegant, warm, simple, and trustworthy. The brand avoids confusing or exaggerated wording. It focuses on beauty, styling confidence, and meaningful personal details.
 
 The voice of NURA is:
 

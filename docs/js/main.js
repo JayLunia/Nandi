@@ -43,13 +43,13 @@ $(function () {
       path: "story.html",
       title: "NURA Story | Contemporary Boho Crystal Jewellery Brand",
       description:
-        "Learn about NURA, a contemporary boho crystal jewellery brand built around wearable meaning, everyday styling, gifting, process and real product photography."
+        "Learn about NURA, a contemporary boho crystal jewellery brand made for everyday styling, meaningful gifting and personal expression."
     },
     lookbook: {
       path: "lookbook.html",
       title: "NURA Lookbook | Crystal Jewellery Product Photography and Styling",
       description:
-        "Explore the NURA jewellery lookbook with product photography, crystal-led styling ideas, display trays, pendant strands, bracelets, earrings and gift-ready edits."
+        "Explore NURA jewellery styling ideas with necklaces, bracelets, earrings, pendants and gift-ready pieces for everyday and special moments."
     },
     faq: {
       path: "faq.html",
@@ -99,7 +99,7 @@ $(function () {
   } else {
     $("#loader").addClass("hide");
     $("main").prepend(
-      '<section class="section-shell json-warning"><p class="eyebrow">Preview setup</p><h1>Content ready for local preview.</h1><p>The site is using bundled JavaScript data files so it can open directly from your computer without a remote fetch or HTTPS dependency.</p></section>'
+      '<section class="section-shell json-warning"><p class="eyebrow">NURA</p><h1>Content is loading.</h1><p>Please refresh the page or open the shop again in a moment.</p></section>'
     );
   }
 
@@ -182,8 +182,8 @@ $(function () {
         .join("")
     );
 
-    $("#processEyebrow").text(site.process?.eyebrow || "Process");
-    $("#processTitle").text(site.process?.title || "Selected, styled and shared with intention.");
+    $("#processEyebrow").text(site.process?.eyebrow || "How it works");
+    $("#processTitle").text(site.process?.title || "Choose, style and order with ease.");
     $("#processGrid").html(
       (site.process?.steps || [])
         .map(
@@ -254,7 +254,7 @@ $(function () {
     );
 
     $("#trustEyebrow").text(site.trust?.eyebrow || "Worn, loved and shared");
-    $("#trustTitle").text(site.trust?.title || "Trust grows through real products, process and customer moments.");
+    $("#trustTitle").text(site.trust?.title || "Made to feel honest, easy and personal.");
     $("#trustCopy").text(site.trust?.copy || "");
     $("#trustBadges").html(
       (site.trust?.badges || [])
@@ -1258,7 +1258,7 @@ $(function () {
           <nav class="nav-links" aria-label="Primary navigation">
             <a href="story.html" data-nav-page="story">Story</a>
             <a href="shop.html" data-nav-page="shop">Shop</a>
-            <a href="story.html#process" data-nav-page="story">Process</a>
+            <a href="story.html#process" data-nav-page="story">How it works</a>
             <a href="lookbook.html" data-nav-page="lookbook">Lookbook</a>
             <a href="faq.html" data-nav-page="faq">FAQ</a>
           </nav>
@@ -1282,7 +1282,7 @@ $(function () {
         <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
           <a href="story.html" data-nav-page="story">Story</a>
           <a href="shop.html" data-nav-page="shop">Shop</a>
-          <a href="story.html#process" data-nav-page="story">Process</a>
+          <a href="story.html#process" data-nav-page="story">How it works</a>
           <a href="lookbook.html" data-nav-page="lookbook">Lookbook</a>
           <a href="faq.html" data-nav-page="faq">FAQ</a>
         </aside>
