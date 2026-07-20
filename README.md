@@ -1,6 +1,6 @@
 # NURA Jewellery Website
 
-NURA is a contemporary boho crystal jewellery brand built around wearable meaning, real product photography, gifting, and everyday styling. This repository contains a static multi-page ecommerce display website for NURA with editable JSON content, product search, product filters, a persistent cart, WhatsApp order checkout, and India UPI payment readiness.
+NURA is a contemporary boho crystal jewellery brand built around wearable meaning, real product photography, gifting, and everyday styling. This repository contains a static multi-page ecommerce display website for NURA with editable JavaScript content files, product search, product filters, a persistent cart, WhatsApp order checkout, and India UPI payment readiness.
 
 The project is intentionally built without Node or a build step. It uses HTML, CSS, Bootstrap, jQuery, and local JavaScript data files so it can be hosted directly on GitHub Pages without relying on JSON fetches from the browser.
 
@@ -12,7 +12,7 @@ The project is intentionally built without Node or a build step. It uses HTML, C
 ## Website Pages
 
 - `index.html` - Home page with animated hero, brand highlights, collection edits, ordering system cards, and newsletter form.
-- `shop.html` - Product catalogue with JSON-driven products, category filters, search, sorting, quick view, add to bag, buy now, and checkout.
+- `shop.html` - Product catalogue with JavaScript-data-driven products, category filters, search, sorting, quick view, add to bag, buy now, and checkout.
 - `story.html` - NURA brand story, content pillars, selection process, atelier note, trust badges, and storefront system details.
 - `lookbook.html` - Visual product photography page. Each image links back to the matching shop product.
 - `faq.html` - Ordering, payment, product care, gifting, and crystal-language FAQ.
@@ -20,8 +20,8 @@ The project is intentionally built without Node or a build step. It uses HTML, C
 ## Core Features
 
 - Multi-page static website ready for GitHub Pages.
-- Editable content from `json/site.json`, `json/products.json`, and `json/checkout.json`.
-- Product cards generated from JSON, not hard-coded in HTML.
+- Editable content from `js/site-data.js`, `js/products-data.js`, and `js/checkout-data.js`.
+- Product cards generated from JavaScript data, not hard-coded in HTML.
 - Search, category filtering, sorting, quick view, add to bag, and buy now actions.
 - Cart persists with `localStorage`, so hard refresh does not clear the bag.
 - WhatsApp checkout sends customer name, phone, location, pincode, notes, product links, quantity, and total amount.
@@ -43,14 +43,12 @@ The project is intentionally built without Node or a build step. It uses HTML, C
 │   └── style.css
 ├── js/
 │   ├── jquery-3.7.1.min.js
-│   ├── main.js
 │   ├── site-data.js
 │   ├── products-data.js
-│   └── checkout-data.js
-├── json/
-│   ├── site.json
-│   ├── products.json
-│   └── checkout.json
+│   ├── checkout-data.js
+│   └── main.js
+├── docs/
+│   └── copy of the deploy-ready site
 └── assets/
     └── images/
         ├── brand/
@@ -60,7 +58,7 @@ The project is intentionally built without Node or a build step. It uses HTML, C
 
 ## Editing Content
 
-Use `json/site.json` for brand-level content:
+Use `js/site-data.js` for brand-level content:
 
 - Brand name, logo path, and footer copy.
 - Homepage hero text and hero slides.
@@ -75,7 +73,7 @@ Use `json/site.json` for brand-level content:
 - Footer links.
 - Main SEO title, description, keywords, and canonical URL.
 
-Use `json/products.json` for catalogue content:
+Use `js/products-data.js` for catalogue content:
 
 - Product name, SKU, slug, category, price, and availability.
 - Badge, stock label, colour mood, material notes, care notes, and shipping note.
@@ -84,7 +82,7 @@ Use `json/products.json` for catalogue content:
 - Product SEO title, SEO description, and keywords.
 - Lookbook entries and their target product links.
 
-Use `json/checkout.json` for ordering and payment settings:
+Use `js/checkout-data.js` for ordering and payment settings:
 
 - WhatsApp number.
 - Display phone number.
@@ -97,11 +95,11 @@ Use `json/checkout.json` for ordering and payment settings:
 ## Adding A Product
 
 1. Add the product image to `assets/images/products/`.
-2. Open `json/products.json`.
+2. Open `js/products-data.js`.
 3. Copy an existing product object.
 4. Change the `id`, `sku`, `slug`, `name`, `category`, `price`, `image`, descriptions, and SEO fields.
 5. Make sure the `category` matches one of the category IDs in the same file.
-6. Save the JSON and preview `shop.html`.
+6. Save the file and preview `shop.html`.
 
 Do not leave duplicate product IDs. The cart, product links, quick view, and WhatsApp checkout all use the product `id`.
 
@@ -116,15 +114,17 @@ WhatsApp checkout is already configured for:
 UPI is intentionally not live yet. Before accepting direct UPI payments:
 
 1. Replace `assets/images/payments/upi-qr-placeholder.svg` with the real UPI QR image.
-2. Update `upiQrImage` in `json/checkout.json` if the filename changes.
-3. Add the real UPI ID in `json/checkout.json`.
+2. Update `upiQrImage` in `js/checkout-data.js` if the filename changes.
+3. Add the real UPI ID in `js/checkout-data.js`.
 4. Test a cart checkout and confirm the total shown near the QR is correct.
 
 Until the real UPI ID is added, the direct UPI button stays disabled.
 
 ## Local Preview
 
-The site is designed to work locally without a server because the content is bundled into JavaScript files. You can still preview it with a simple static server if you want:
+The site is designed to work locally without a server because the content is bundled into JavaScript files. You can open `index.html` directly in a browser from your computer.
+
+You can still preview it with a simple static server if you want:
 
 ```bash
 python3 -m http.server 8000
@@ -184,7 +184,7 @@ Avoid unsupported claims:
 
 ## Maintenance Checklist
 
-- Validate JSON after editing.
+- Check JavaScript syntax after editing the data files.
 - Check that every product image path exists.
 - Test `shop.html` search, filters, sorting, quick view, add to bag, buy now, and checkout.
 - Test cart persistence after a hard refresh.

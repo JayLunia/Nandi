@@ -603,7 +603,7 @@ $(function () {
     $("#upiPayLink").on("click", function (event) {
       if (!validateCheckoutReady("UPI") || !state.checkout.upiId) {
         event.preventDefault();
-        showToast(state.checkout.upiId ? "Add customer details first." : "Add the real UPI ID in json/checkout.json first.");
+        showToast(state.checkout.upiId ? "Add customer details first." : "Add the real UPI ID in js/checkout-data.js first.");
         return;
       }
       $(this).attr("href", getUpiUrl());
@@ -883,7 +883,7 @@ $(function () {
       $("#upiIdDisplay").text(`UPI ID: ${state.checkout.upiId}`);
       $("#upiPayLink").attr("href", getUpiUrl()).attr("aria-disabled", "false").removeClass("disabled");
     } else {
-      $("#upiIdDisplay").text("Add UPI ID in json/checkout.json before going live.");
+      $("#upiIdDisplay").text("Add UPI ID in js/checkout-data.js before going live.");
       $("#upiPayLink").attr("href", "#").attr("aria-disabled", "true").addClass("disabled");
     }
   }
@@ -1366,7 +1366,7 @@ $(function () {
                   <span>Payable total</span>
                   <strong id="upiTotal">₹0</strong>
                 </div>
-                <p id="upiIdDisplay">Add UPI ID in json/checkout.json before going live.</p>
+                <p id="upiIdDisplay">Add UPI ID in js/checkout-data.js before going live.</p>
                 <a class="payment-action" id="upiPayLink" href="#" aria-disabled="true">Open UPI app</a>
                 <a class="payment-action secondary" id="upiConfirmWhatsapp" href="#" target="_blank" rel="noopener">Confirm on WhatsApp</a>
               </article>

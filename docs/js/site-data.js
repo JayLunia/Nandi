@@ -140,7 +140,7 @@ window.NURA_SITE_DATA = {
       },
       {
         "value": "100%",
-        "label": "catalog managed from JSON"
+        "label": "catalog managed from JavaScript"
       }
     ]
   },
@@ -158,7 +158,7 @@ window.NURA_SITE_DATA = {
     {
       "symbol": "*",
       "title": "Easy Product Updates",
-      "copy": "Add, remove or edit jewellery by changing product objects in products.json and placing photos in the product image folder."
+      "copy": "Add, remove or edit jewellery by changing product objects in js/products-data.js and placing photos in the product image folder."
     }
   ],
   "trust": {
