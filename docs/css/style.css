@@ -410,11 +410,14 @@ button {
 }
 
 .page-hero-content {
-  width: min(820px, 100%);
+  width: min(780px, 100%);
 }
 
 .page-hero h1 {
-  font-size: clamp(3.2rem, 7vw, 6.7rem);
+  max-width: 12ch;
+  font-size: clamp(3rem, 6.2vw, 5.8rem);
+  line-height: 1.06;
+  overflow-wrap: normal;
 }
 
 .page-hero p:not(.eyebrow) {
@@ -529,7 +532,7 @@ button {
 
 .hero-content {
   min-width: 0;
-  width: min(930px, 100%);
+  width: min(980px, 100%);
   padding-bottom: 0;
 }
 
@@ -556,10 +559,11 @@ h3 {
 }
 
 h1 {
-  max-width: min(900px, 100%);
-  font-size: clamp(3.25rem, 7.4vw, 7.2rem);
-  line-height: 0.94;
+  max-width: min(13ch, 100%);
+  font-size: clamp(3.1rem, 6.6vw, 6.1rem);
+  line-height: 1.06;
   text-wrap: balance;
+  overflow-wrap: normal;
 }
 
 h1 span {
@@ -782,17 +786,19 @@ h1 span {
 
 .section-heading {
   display: grid;
-  grid-template-columns: minmax(0, 0.86fr) minmax(280px, 0.55fr);
-  gap: 28px;
-  align-items: end;
-  margin-bottom: 32px;
+  gap: 12px;
+  width: min(760px, 100%);
+  margin: 0 auto 34px;
+  text-align: center;
 }
 
 .section-heading h2,
 .feature-copy h2,
 .newsletter-section h2 {
-  font-size: clamp(2.25rem, 5vw, 5.2rem);
-  line-height: 0.98;
+  font-size: clamp(2.05rem, 4.2vw, 4.2rem);
+  line-height: 1.08;
+  text-wrap: balance;
+  overflow-wrap: normal;
 }
 
 .collection-grid {
@@ -1432,7 +1438,8 @@ h1 span {
 
 .trust-copy h2 {
   font-size: clamp(2.15rem, 5vw, 4.6rem);
-  line-height: 0.98;
+  line-height: 1.08;
+  text-wrap: balance;
 }
 
 .trust-copy p:not(.eyebrow) {
@@ -1962,7 +1969,8 @@ h1 span {
   margin-bottom: 12px;
   color: var(--plum);
   font-size: clamp(2rem, 5vw, 4rem);
-  line-height: 0.96;
+  line-height: 1.08;
+  text-wrap: balance;
 }
 
 .quick-view-copy p {
@@ -2287,7 +2295,7 @@ h1 span {
   .page-hero h1 {
     max-width: calc(100vw - 32px);
     font-size: clamp(2.25rem, 10vw, 3rem);
-    line-height: 1.02;
+    line-height: 1.08;
   }
 
   .page-hero p:not(.eyebrow) {
@@ -2311,7 +2319,7 @@ h1 span {
     width: 100%;
     max-width: calc(100vw - 32px);
     font-size: clamp(2.2rem, 9.6vw, 2.68rem);
-    line-height: 1.02;
+    line-height: 1.08;
   }
 
   .hero-content p:not(.eyebrow) {

@@ -132,7 +132,7 @@ window.NURA_SITE_DATA = {
     "stats": [
       {
         "value": "12",
-        "label": "editable product listings"
+        "label": "curated product listings"
       },
       {
         "value": "6",
@@ -140,7 +140,7 @@ window.NURA_SITE_DATA = {
       },
       {
         "value": "100%",
-        "label": "catalog managed from JavaScript"
+        "label": "easy-to-browse jewellery edit"
       }
     ]
   },
@@ -157,8 +157,8 @@ window.NURA_SITE_DATA = {
     },
     {
       "symbol": "*",
-      "title": "Easy Product Updates",
-      "copy": "Add, remove or edit jewellery by changing product objects in js/products-data.js and placing photos in the product image folder."
+      "title": "Guided Product Details",
+      "copy": "Each product can show clear photos, pricing, styling notes and care details so customers can choose with confidence."
     }
   ],
   "trust": {
@@ -170,7 +170,7 @@ window.NURA_SITE_DATA = {
       "UPI payment option",
       "Customer confirmation before dispatch",
       "Real product photography",
-      "Editable product details"
+      "Clear product details"
     ]
   },
   "faqs": [
