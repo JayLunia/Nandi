@@ -184,9 +184,19 @@ button {
   transition: transform 0.35s ease;
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a.active::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.nav-links a.active,
+.mobile-menu a.active {
+  color: var(--champagne);
+}
+
+.mobile-menu a.active {
+  background: rgba(246, 233, 220, 0.14);
 }
 
 .header-actions {
@@ -365,6 +375,76 @@ button {
   overflow: hidden;
   color: var(--champagne);
   isolation: isolate;
+}
+
+.page-hero {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: 62vh;
+  padding: 170px max(24px, calc((100vw - 1180px) / 2)) 72px;
+  overflow: hidden;
+  color: var(--champagne);
+  isolation: isolate;
+}
+
+.page-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background-position: center;
+  background-size: cover;
+  filter: saturate(0.94) contrast(1.04);
+  transform: scale(1.04);
+}
+
+.page-hero::after {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  content: "";
+  background:
+    radial-gradient(circle at 78% 22%, rgba(216, 181, 109, 0.2), transparent 24%),
+    linear-gradient(90deg, rgba(22, 0, 17, 0.92), rgba(51, 0, 37, 0.66) 48%, rgba(22, 0, 17, 0.26)),
+    linear-gradient(0deg, rgba(22, 0, 17, 0.72), transparent 52%);
+}
+
+.page-hero-content {
+  width: min(820px, 100%);
+}
+
+.page-hero h1 {
+  font-size: clamp(3.2rem, 7vw, 6.7rem);
+}
+
+.page-hero p:not(.eyebrow) {
+  width: min(660px, 100%);
+  margin: 26px 0 0;
+  color: rgba(246, 233, 220, 0.8);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.75;
+}
+
+.page-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.home-page .service-section,
+.faq-page .service-section {
+  padding-top: 0;
+}
+
+.shop-page .shop-section,
+.story-page .story-section,
+.faq-page .faq-section {
+  padding-top: 80px;
+}
+
+.lookbook-page .lookbook-section {
+  padding-top: 90px;
 }
 
 .hero-bg {
@@ -2100,6 +2180,10 @@ h1 span {
     min-height: 940px;
   }
 
+  .page-hero {
+    min-height: 560px;
+  }
+
   .hero-content {
     padding-bottom: 0;
   }
@@ -2193,6 +2277,28 @@ h1 span {
   .hero {
     min-height: calc(100vh - 36px);
     padding: 128px 16px 24px;
+  }
+
+  .page-hero {
+    min-height: 520px;
+    padding: 128px 16px 46px;
+  }
+
+  .page-hero h1 {
+    max-width: calc(100vw - 32px);
+    font-size: clamp(2.25rem, 10vw, 3rem);
+    line-height: 1.02;
+  }
+
+  .page-hero p:not(.eyebrow) {
+    width: min(342px, calc(100vw - 32px));
+    max-width: 100%;
+    font-size: 0.98rem;
+  }
+
+  .page-hero-actions {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .hero-content {

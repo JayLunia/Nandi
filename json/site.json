@@ -20,8 +20,9 @@
     ],
     "copy": "NURA creates crystal-led jewellery for everyday styling, special occasions and meaningful gifting. Explore boho necklaces, bracelets, earrings, pendants and curated pieces made to carry beauty, intention and personal expression.",
     "primaryCta": "Shop crystal jewellery",
+    "primaryHref": "shop.html",
     "secondaryCta": "Explore NURA story",
-    "secondaryHref": "#about",
+    "secondaryHref": "story.html",
     "slides": [
       {
         "kicker": "Everyday intention",
@@ -200,15 +201,15 @@
       "links": [
         {
           "label": "NURA story",
-          "href": "#about"
+          "href": "story.html"
         },
         {
           "label": "Shop jewellery",
-          "href": "#shop"
+          "href": "shop.html"
         },
         {
           "label": "Lookbook",
-          "href": "#lookbook"
+          "href": "lookbook.html"
         }
       ]
     },
@@ -217,15 +218,15 @@
       "links": [
         {
           "label": "Process",
-          "href": "#process"
+          "href": "story.html#process"
         },
         {
           "label": "For healers",
-          "href": "#atelier"
+          "href": "story.html#atelier"
         },
         {
           "label": "Customer trust",
-          "href": "#trust"
+          "href": "story.html#trust"
         }
       ]
     },
@@ -242,7 +243,7 @@
         },
         {
           "label": "FAQ",
-          "href": "#faq"
+          "href": "faq.html"
         }
       ]
     }
