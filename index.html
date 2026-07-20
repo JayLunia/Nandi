@@ -5,9 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="NURA is a jewelry ecommerce showcase with animated collections, editable JSON content, and polished product displays."
+      content="Shop NURA contemporary boho crystal jewellery designed to be worn, loved and lived in. Explore necklaces, bracelets, earrings, pendants and meaningful gift-ready pieces."
     />
-    <title>NURA Jewelry | Light-Cut Statement Pieces</title>
+    <meta
+      name="keywords"
+      content="NURA jewellery, contemporary boho crystal jewellery, crystal jewellery India, everyday crystal jewellery, boho necklaces, crystal bracelets, crystal earrings, meaningful jewellery gifts"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#330025" />
+    <link rel="canonical" href="https://jaylunia.github.io/Nandi/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="NURA Jewellery | Contemporary Boho Crystal Jewellery" />
+    <meta
+      property="og:description"
+      content="Explore NURA crystal-led jewellery for everyday wear, special occasions, intention-led styling and meaningful gifting."
+    />
+    <meta property="og:url" content="https://jaylunia.github.io/Nandi/" />
+    <meta property="og:image" content="https://jaylunia.github.io/Nandi/assets/images/brand/nura-logo.JPG" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="assets/images/brand/favicon.svg" />
+    <title>NURA Jewellery | Contemporary Boho Crystal Jewellery for Everyday Wear</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/jquery-3.7.1.min.js" defer></script>
@@ -15,7 +32,7 @@
   </head>
   <body>
     <div class="loader" id="loader" aria-hidden="true">
-      <img src="14340495-cec3-4148-ad80-c19ca91f271d.JPG" alt="" />
+      <img src="assets/images/brand/nura-logo.JPG" alt="" />
       <span></span>
     </div>
 
@@ -24,16 +41,17 @@
     <header class="site-header" id="siteHeader">
       <a class="brand-mark" href="#home" aria-label="NURA home">
         <img
-          src="14340495-cec3-4148-ad80-c19ca91f271d.JPG"
+          src="assets/images/brand/nura-logo.JPG"
           alt="NURA logo"
         />
       </a>
 
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#collections">Collections</a>
+        <a href="#about">Story</a>
         <a href="#shop">Shop</a>
-        <a href="#atelier">Atelier</a>
+        <a href="#process">Process</a>
         <a href="#lookbook">Lookbook</a>
+        <a href="#faq">FAQ</a>
       </nav>
 
       <div class="header-actions">
@@ -53,16 +71,17 @@
     </header>
 
     <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
-      <a href="#collections">Collections</a>
+      <a href="#about">Story</a>
       <a href="#shop">Shop</a>
-      <a href="#atelier">Atelier</a>
+      <a href="#process">Process</a>
       <a href="#lookbook">Lookbook</a>
+      <a href="#faq">FAQ</a>
     </aside>
 
     <div class="search-panel" id="searchPanel" aria-label="Product search">
       <label for="searchInput">Search NURA pieces</label>
       <div>
-        <input id="searchInput" type="search" placeholder="Try necklace, bracelet, moon..." />
+        <input id="searchInput" type="search" placeholder="Try crystal, bracelet, pendant..." />
         <button type="button" id="clearSearch">Clear</button>
       </div>
     </div>
@@ -80,14 +99,14 @@
         </div>
 
         <div class="hero-content reveal">
-          <p class="eyebrow" id="heroEyebrow">NURA Jewelry</p>
-          <h1 id="heroTitle">Jewelry that turns light into a signature.</h1>
+          <p class="eyebrow" id="heroEyebrow">Contemporary Boho Crystal Jewellery</p>
+          <h1 id="heroTitle">Jewellery designed to be worn, loved and lived in.</h1>
           <p id="heroCopy">
-            Sculptural pieces, gemstone details, and a dramatic plum-and-gold world built for statement dressing.
+            Crystal-led jewellery for everyday styling, special occasions and meaningful gifting.
           </p>
           <div class="hero-actions">
             <a class="primary-link" href="#shop">Shop the edit</a>
-            <a class="secondary-link" href="#lookbook">View lookbook</a>
+            <a class="secondary-link" href="#about">Explore NURA story</a>
           </div>
         </div>
 
@@ -98,12 +117,28 @@
         <div class="marquee-track" id="marqueeTrack"></div>
       </section>
 
+      <section class="section-shell story-section reveal" id="about">
+        <div class="section-heading">
+          <p class="eyebrow" id="aboutEyebrow">About NURA</p>
+          <h2 id="aboutTitle">Crystal jewellery with everyday meaning.</h2>
+        </div>
+        <div class="story-grid" id="aboutGrid"></div>
+      </section>
+
       <section class="section-shell intro-panel reveal" id="collections">
         <div class="section-heading">
           <p class="eyebrow">The NURA edits</p>
-          <h2>Curated moods for every entrance.</h2>
+          <h2>Shop by mood, intention and moment.</h2>
         </div>
         <div class="collection-grid" id="collectionGrid"></div>
+      </section>
+
+      <section class="section-shell process-section reveal" id="process">
+        <div class="section-heading">
+          <p class="eyebrow" id="processEyebrow">Process</p>
+          <h2 id="processTitle">Selected, styled and shared with intention.</h2>
+        </div>
+        <div class="process-grid" id="processGrid"></div>
       </section>
 
       <section class="split-feature reveal" id="atelier">
@@ -118,8 +153,8 @@
 
       <section class="shop-section section-shell" id="shop">
         <div class="section-heading reveal">
-          <p class="eyebrow">Shop signature pieces</p>
-          <h2>Editable products, animated display.</h2>
+          <p class="eyebrow">Shop NURA jewellery</p>
+          <h2>Boho crystal pieces for daily wear, gifting and special occasions.</h2>
         </div>
 
         <div class="shop-toolbar reveal">
@@ -158,6 +193,23 @@
         <div class="service-grid" id="serviceGrid"></div>
       </section>
 
+      <section class="section-shell trust-section reveal" id="trust">
+        <div class="trust-copy">
+          <p class="eyebrow" id="trustEyebrow">Worn, loved and shared</p>
+          <h2 id="trustTitle">Trust grows through real products, process and customer moments.</h2>
+          <p id="trustCopy"></p>
+        </div>
+        <div class="trust-badges" id="trustBadges"></div>
+      </section>
+
+      <section class="section-shell faq-section reveal" id="faq">
+        <div class="section-heading">
+          <p class="eyebrow">Questions</p>
+          <h2>Order, payment and product details.</h2>
+        </div>
+        <div class="faq-grid" id="faqGrid"></div>
+      </section>
+
       <section class="newsletter-section reveal" id="newsletter">
         <div>
           <p class="eyebrow">Private drop list</p>
@@ -184,9 +236,80 @@
       <div class="cart-items" id="cartItems"></div>
       <div class="cart-total">
         <span>Total</span>
-        <strong id="cartTotal">$0</strong>
+        <strong id="cartTotal">₹0</strong>
       </div>
-      <button class="checkout-button" type="button">Request checkout</button>
+      <div class="checkout-panel" id="checkoutPanel">
+        <div class="checkout-heading">
+          <p class="eyebrow">Checkout</p>
+          <h3>India payment options</h3>
+          <p id="checkoutNote">Add your details once. NURA will receive every product link, quantity and total.</p>
+        </div>
+
+        <form class="customer-form" id="checkoutDetails">
+          <label>
+            <span>Name</span>
+            <input id="customerName" type="text" autocomplete="name" placeholder="Customer name" required aria-describedby="customerNameError" />
+            <small class="field-error" id="customerNameError"></small>
+          </label>
+          <label>
+            <span>Phone</span>
+            <input
+              id="customerPhone"
+              type="tel"
+              autocomplete="tel"
+              placeholder="+91 mobile number"
+              pattern="(\+91[\s-]?)?[6-9][0-9\s-]{9,13}"
+              required
+              aria-describedby="customerPhoneError"
+            />
+            <small class="field-error" id="customerPhoneError"></small>
+          </label>
+          <label class="wide">
+            <span>Delivery location</span>
+            <textarea id="customerLocation" rows="3" placeholder="Address, city and state" required aria-describedby="customerLocationError"></textarea>
+            <small class="field-error" id="customerLocationError"></small>
+          </label>
+          <label>
+            <span>Pincode</span>
+            <input
+              id="customerPincode"
+              type="text"
+              inputmode="numeric"
+              autocomplete="postal-code"
+              placeholder="Pincode"
+              pattern="[1-9][0-9]{5}"
+              aria-describedby="customerPincodeError"
+            />
+            <small class="field-error" id="customerPincodeError"></small>
+          </label>
+          <label>
+            <span>Notes</span>
+            <input id="customerNote" type="text" placeholder="Gift note or timing" />
+          </label>
+        </form>
+
+        <div class="payment-grid">
+          <article class="payment-card">
+            <span class="payment-label">1. WhatsApp order</span>
+            <h4>Send order to NURA</h4>
+            <p>Includes customer details, product links, quantity and total amount.</p>
+            <a class="payment-action primary" id="whatsappCheckout" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
+          </article>
+
+          <article class="payment-card upi-card">
+            <span class="payment-label">2. Direct UPI</span>
+            <h4>Scan and pay</h4>
+            <img id="upiQrImage" src="assets/images/payments/upi-qr-placeholder.svg" alt="NURA UPI QR code" />
+            <div class="upi-summary">
+              <span>Payable total</span>
+              <strong id="upiTotal">₹0</strong>
+            </div>
+            <p id="upiIdDisplay">Add UPI ID in json/checkout.json before going live.</p>
+            <a class="payment-action" id="upiPayLink" href="#" aria-disabled="true">Open UPI app</a>
+            <a class="payment-action secondary" id="upiConfirmWhatsapp" href="#" target="_blank" rel="noopener">Confirm on WhatsApp</a>
+          </article>
+        </div>
+      </div>
     </aside>
     <div class="page-scrim" id="pageScrim"></div>
 

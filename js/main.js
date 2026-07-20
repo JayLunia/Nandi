@@ -4,6 +4,16 @@ $(function () {
 
   const state = {
     site: null,
+    checkout: {
+      currency: "INR",
+      locale: "en-IN",
+      merchantName: "NURA Jewellery",
+      whatsappNumber: "919638833888",
+      whatsappDisplay: "+91 96388 33888",
+      upiId: "",
+      upiQrImage: "assets/images/payments/upi-qr-placeholder.svg",
+      publicSiteUrl: "https://jaylunia.github.io/Nandi/"
+    },
     products: [],
     categories: [],
     lookbook: [],
@@ -15,37 +25,59 @@ $(function () {
     favorites: readStorage(FAVORITES_KEY, [])
   };
 
+  const imageUrl = (path) => {
+    if (!path) return "";
+    if (/^(https?:|data:|\/|assets\/)/i.test(path)) return path;
+    return `assets/images/products/${path}`;
+  };
+
   const formatPrice = (price) =>
-    new Intl.NumberFormat("en-US", {
+    new Intl.NumberFormat(state.checkout.locale || "en-IN", {
       style: "currency",
-      currency: "USD",
+      currency: state.checkout.currency || "INR",
       maximumFractionDigits: 0
-    }).format(price);
+    }).format(Number(price) || 0);
 
-  const imageUrl = (path) => path;
-
-  $.when($.getJSON("json/site.json"), $.getJSON("json/products.json"))
-    .done(function (siteResponse, productResponse) {
+  $.when($.getJSON("json/site.json"), $.getJSON("json/products.json"), $.getJSON("json/checkout.json"))
+    .done(function (siteResponse, productResponse, checkoutResponse) {
       state.site = siteResponse[0];
+      state.checkout = { ...state.checkout, ...(checkoutResponse[0] || {}) };
       const productData = productResponse[0];
       state.products = productData.products || [];
       state.categories = productData.categories || [];
       state.lookbook = productData.lookbook || [];
 
+      hydrateSeo();
       hydrateSite();
       renderFilters();
       renderProducts();
+      renderCheckoutConfig();
       updateCart();
       bindEvents();
       revealOnScroll();
+      injectStructuredData();
+      handleInitialHash();
       setTimeout(() => $("#loader").addClass("hide"), 650);
     })
     .fail(function () {
       $("#loader").addClass("hide");
       $("main").prepend(
-        '<section class="section-shell json-warning"><p class="eyebrow">Preview setup</p><h1>Open through GitHub Pages.</h1><p>The browser blocked the JSON product files because this was opened directly from your computer. Once the same folder is published on GitHub Pages, products load normally from <code>json/products.json</code>. For local preview without Node, use the VS Code Live Server extension.</p></section>'
+        '<section class="section-shell json-warning"><p class="eyebrow">Preview setup</p><h1>Open through GitHub Pages.</h1><p>The browser blocked the JSON product files because this was opened directly from your computer. Once the same folder is published on GitHub Pages, products load normally from <code>json/products.json</code>. For local preview without Node, use a simple static server or the VS Code Live Server extension.</p></section>'
       );
     });
+
+  function hydrateSeo() {
+    const seo = state.site?.seo || {};
+    if (seo.title) document.title = seo.title;
+    updateMeta("description", seo.description);
+    updateMeta("keywords", seo.keywords);
+    updateMeta("robots", "index, follow");
+    updateMetaProperty("og:title", seo.title);
+    updateMetaProperty("og:description", seo.description);
+    updateMetaProperty("og:url", seo.canonicalUrl || getPublicBaseUrl());
+    updateMetaProperty("og:image", absoluteUrl(state.site.brand.logo));
+    $("link[rel='canonical']").attr("href", seo.canonicalUrl || getPublicBaseUrl());
+  }
 
   function hydrateSite() {
     const site = state.site;
@@ -60,7 +92,7 @@ $(function () {
     }
     $("#heroCopy").text(hero.copy);
     $(".primary-link").text(hero.primaryCta);
-    $(".secondary-link").text(hero.secondaryCta);
+    $(".secondary-link").text(hero.secondaryCta).attr("href", hero.secondaryHref || "#lookbook");
 
     if (slides.length) {
       setHeroSlide(0);
@@ -69,13 +101,28 @@ $(function () {
       }, 5200);
     }
 
-    const marqueeItems = [...site.marquee, ...site.marquee]
+    const marqueeItems = [...(site.marquee || []), ...(site.marquee || [])]
       .map((item) => `<span>${escapeHtml(item)}</span>`)
       .join("");
     $("#marqueeTrack").html(marqueeItems);
 
+    $("#aboutEyebrow").text(site.about?.eyebrow || "About NURA");
+    $("#aboutTitle").text(site.about?.title || "Crystal jewellery with everyday meaning.");
+    $("#aboutGrid").html(
+      (site.about?.cards || [])
+        .map(
+          (item) => `
+            <article class="story-card">
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(item.copy)}</p>
+            </article>
+          `
+        )
+        .join("")
+    );
+
     $("#collectionGrid").html(
-      site.collections
+      (site.collections || [])
         .map(
           (item) => `
             <a class="collection-card" href="#shop" data-shop-category="${escapeHtml(item.targetCategory || "all")}">
@@ -91,11 +138,27 @@ $(function () {
         .join("")
     );
 
+    $("#processEyebrow").text(site.process?.eyebrow || "Process");
+    $("#processTitle").text(site.process?.title || "Selected, styled and shared with intention.");
+    $("#processGrid").html(
+      (site.process?.steps || [])
+        .map(
+          (item, index) => `
+            <article class="process-card">
+              <span>${String(index + 1).padStart(2, "0")}</span>
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(item.copy)}</p>
+            </article>
+          `
+        )
+        .join("")
+    );
+
     $("#atelierEyebrow").text(site.atelier.eyebrow);
     $("#atelierTitle").text(site.atelier.title);
     $("#atelierCopy").text(site.atelier.copy);
     $("#atelierStats").html(
-      site.atelier.stats
+      (site.atelier.stats || [])
         .map(
           (stat) => `
             <div class="stat-card">
@@ -133,7 +196,7 @@ $(function () {
     );
 
     $("#serviceGrid").html(
-      site.services
+      (site.services || [])
         .map(
           (item) => `
             <article class="service-card">
@@ -146,18 +209,40 @@ $(function () {
         .join("")
     );
 
+    $("#trustEyebrow").text(site.trust?.eyebrow || "Worn, loved and shared");
+    $("#trustTitle").text(site.trust?.title || "Trust grows through real products, process and customer moments.");
+    $("#trustCopy").text(site.trust?.copy || "");
+    $("#trustBadges").html(
+      (site.trust?.badges || [])
+        .map((badge) => `<span>${escapeHtml(badge)}</span>`)
+        .join("")
+    );
+
+    $("#faqGrid").html(
+      (site.faqs || [])
+        .map(
+          (item) => `
+            <article class="faq-card">
+              <h3>${escapeHtml(item.question)}</h3>
+              <p>${escapeHtml(item.answer)}</p>
+            </article>
+          `
+        )
+        .join("")
+    );
+
     $("#siteFooter").html(`
       <div class="footer-brand">
         <img src="${imageUrl(site.brand.logo)}" alt="${escapeHtml(site.brand.name)} logo">
         <p>${escapeHtml(site.brand.footerCopy)}</p>
       </div>
-      ${site.footerColumns
+      ${(site.footerColumns || [])
         .map(
           (column) => `
             <div class="footer-column">
               <h3>${escapeHtml(column.title)}</h3>
-              ${column.links
-                .map((link) => `<a href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`)
+              ${(column.links || [])
+                .map((link) => `<a href="${safeHref(link.href)}">${escapeHtml(link.label)}</a>`)
                 .join("")}
             </div>
           `
@@ -172,7 +257,7 @@ $(function () {
     if (!slide) return;
 
     state.heroIndex = index;
-    $("#heroBg").css("background-image", `url("${slide.image}")`);
+    $("#heroBg").css("background-image", `url("${imageUrl(slide.image)}")`);
     $("#heroShowcase").html(`
       <article class="hero-card">
         <a class="hero-image-link" href="#shop" data-shop-product="${escapeHtml(slide.targetProduct || "")}">
@@ -227,14 +312,19 @@ $(function () {
         !term ||
         [
           product.name,
+          product.sku,
           product.category,
           product.categoryLabel,
           product.description,
           product.longDescription,
           product.materials,
+          product.care,
+          product.shippingNote,
+          product.whatsappText,
           product.color,
           product.badge,
-          product.stock
+          product.stock,
+          product.keywords
         ]
           .join(" ")
           .toLowerCase()
@@ -266,20 +356,22 @@ $(function () {
 
     $("#productGrid").html(
       products
-        .map(
-          (product) => `
-            <article class="product-card card" data-id="${escapeHtml(product.id)}">
+        .map((product) => {
+          const isSaved = state.favorites.includes(product.id);
+          const isAvailable = product.available !== false;
+          return `
+            <article class="product-card card" id="product-${escapeHtml(product.id)}" data-id="${escapeHtml(product.id)}">
               <div class="product-media">
-                <button class="product-image-button" type="button" data-quick="${escapeHtml(product.id)}" aria-label="View ${escapeHtml(product.name)}">
-                  <img src="${imageUrl(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy">
-                </button>
+                <a class="product-image-button" href="#product-${escapeHtml(product.id)}" data-product-link="${escapeHtml(
+            product.id
+          )}" aria-label="Open ${escapeHtml(product.name)} details">
+                  <img src="${imageUrl(product.image)}" alt="${escapeHtml(product.alt || product.name)}" loading="lazy">
+                </a>
                 <span class="badge">${escapeHtml(product.badge)}</span>
-                <button class="favorite-toggle ${
-                  state.favorites.includes(product.id) ? "active" : ""
-                }" type="button" data-favorite="${escapeHtml(product.id)}" aria-label="Save ${
-            escapeHtml(product.name)
-          }">&hearts;</button>
-                <span class="stock-tag">${escapeHtml(product.stock)}</span>
+                <button class="favorite-toggle ${isSaved ? "active" : ""}" type="button" data-favorite="${escapeHtml(
+            product.id
+          )}" aria-label="${isSaved ? "Remove" : "Save"} ${escapeHtml(product.name)}">&hearts;</button>
+                <span class="stock-tag">${escapeHtml(isAvailable ? product.stock : "Unavailable")}</span>
               </div>
               <div class="product-info">
                 <span class="product-kicker">${escapeHtml(product.categoryLabel)}</span>
@@ -290,13 +382,18 @@ $(function () {
                   <span>${escapeHtml(product.color)}</span>
                 </div>
                 <div class="product-actions">
-                  <button class="add-to-bag" type="button" data-add="${escapeHtml(product.id)}">Add to bag</button>
-                  <button class="quick-open" type="button" data-quick="${escapeHtml(product.id)}">View</button>
+                  <button class="add-to-bag" type="button" data-add="${escapeHtml(product.id)}" ${
+            isAvailable ? "" : "disabled"
+          }>Add to bag</button>
+                  <button class="buy-now" type="button" data-buy="${escapeHtml(product.id)}" ${
+            isAvailable ? "" : "disabled"
+          }>Buy now</button>
+                  <a class="quick-open" href="#product-${escapeHtml(product.id)}" data-product-link="${escapeHtml(product.id)}">View</a>
                 </div>
               </div>
             </article>
-          `
-        )
+          `;
+        })
         .join("")
     );
 
@@ -308,8 +405,18 @@ $(function () {
     });
   }
 
+  function renderCheckoutConfig() {
+    const checkout = state.checkout;
+    $("#checkoutNote").text(checkout.shipping?.note || checkout.paymentNote || "Order details are prepared for India checkout.");
+    $("#upiQrImage")
+      .attr("src", imageUrl(checkout.upiQrImage))
+      .attr("alt", `${checkout.merchantName || "NURA"} UPI QR code`);
+    refreshCheckoutLinks();
+  }
+
   function bindEvents() {
     $(window).on("scroll", onScroll);
+    $(window).on("hashchange", handleInitialHash);
     onScroll();
 
     $(document).on("click", ".slide-dot", function () {
@@ -332,8 +439,27 @@ $(function () {
 
     $("#searchInput, #shopSearchInput").on("input", function () {
       state.searchTerm = $(this).val();
+      if (state.searchTerm.trim()) {
+        state.activeFilter = "all";
+        renderFilters();
+      }
       syncSearchInputs(this);
       renderProducts();
+      if (this.id === "searchInput" && state.searchTerm.trim().length >= 2) {
+        window.clearTimeout(bindEvents.headerSearchTimer);
+        bindEvents.headerSearchTimer = window.setTimeout(() => {
+          $("#searchPanel").removeClass("open");
+          scrollToShop();
+        }, 450);
+      }
+    });
+
+    $("#searchInput").on("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        $("#searchPanel").removeClass("open");
+        scrollToShop();
+      }
     });
 
     $("#clearSearch").on("click", function () {
@@ -361,11 +487,13 @@ $(function () {
       addToCart($(this).data("add"));
     });
 
-    $(document).on("click", "[data-quick]", function () {
-      if ($(this).is(".product-image-button")) {
-        $(this).closest(".product-card").addClass("image-clicked");
-      }
-      openQuickView($(this).data("quick"));
+    $(document).on("click", "[data-buy]", function () {
+      buyNow($(this).data("buy"));
+    });
+
+    $(document).on("click", "[data-product-link]", function (event) {
+      event.preventDefault();
+      showProductInShop($(this).data("product-link"), { openDetails: true, updateHash: true });
     });
 
     $(document).on("click", "[data-favorite]", function (event) {
@@ -377,7 +505,7 @@ $(function () {
       const productId = $(this).data("shop-product");
       if (!productId) return;
       event.preventDefault();
-      showProductInShop(productId);
+      showProductInShop(productId, { updateHash: true });
     });
 
     $(document).on("click", "[data-shop-category]", function (event) {
@@ -411,6 +539,36 @@ $(function () {
       removeFromCart($(this).data("remove"));
     });
 
+    $("#checkoutDetails input, #checkoutDetails textarea").on("input", function () {
+      validateCustomerForm({ quiet: true });
+      refreshCheckoutLinks();
+    });
+
+    $("#whatsappCheckout").on("click", function (event) {
+      if (!validateCheckoutReady("WhatsApp")) {
+        event.preventDefault();
+        return;
+      }
+      $(this).attr("href", getWhatsAppUrl("WhatsApp order"));
+    });
+
+    $("#upiPayLink").on("click", function (event) {
+      if (!validateCheckoutReady("UPI") || !state.checkout.upiId) {
+        event.preventDefault();
+        showToast(state.checkout.upiId ? "Add customer details first." : "Add the real UPI ID in json/checkout.json first.");
+        return;
+      }
+      $(this).attr("href", getUpiUrl());
+    });
+
+    $("#upiConfirmWhatsapp").on("click", function (event) {
+      if (!validateCheckoutReady("UPI confirmation")) {
+        event.preventDefault();
+        return;
+      }
+      $(this).attr("href", getWhatsAppUrl("UPI payment confirmation"));
+    });
+
     $("#closeQuickView").on("click", closeQuickView);
 
     $("#quickView").on("click", function (event) {
@@ -419,7 +577,7 @@ $(function () {
 
     $("#newsletterForm").on("submit", function (event) {
       event.preventDefault();
-      showToast("You are on the private drop list.");
+      showToast("You are on the private NURA drop list.");
       this.reset();
     });
   }
@@ -441,9 +599,13 @@ $(function () {
     });
   }
 
-  function addToCart(productId) {
+  function addToCart(productId, options = {}) {
     const product = findProduct(productId);
     if (!product) return;
+    if (product.available === false) {
+      showToast(`${product.name} is currently unavailable.`);
+      return;
+    }
 
     const existing = state.cart.find((item) => item.id === productId);
     if (existing) {
@@ -453,7 +615,22 @@ $(function () {
     }
     persistCart();
     updateCart();
-    showToast(`${product.name} added to bag.`);
+    if (!options.silent) showToast(`${product.name} added to bag.`);
+  }
+
+  function buyNow(productId) {
+    const product = findProduct(productId);
+    if (!product) return;
+    if (product.available === false) {
+      showToast(`${product.name} is currently unavailable.`);
+      return;
+    }
+    addToCart(productId, { silent: true });
+    closeQuickView();
+    openCart();
+    $("#checkoutPanel").addClass("pulse");
+    window.setTimeout(() => $("#checkoutPanel").removeClass("pulse"), 900);
+    showToast(`${product.name} is ready for checkout.`);
   }
 
   function changeQuantity(productId, delta) {
@@ -475,43 +652,51 @@ $(function () {
   }
 
   function updateCart() {
-    const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+    const lines = getCartLines();
+    if (lines.length !== state.cart.length) {
+      state.cart = lines.map((line) => ({ id: line.product.id, quantity: line.quantity }));
+      persistCart();
+    }
+
+    const totalItems = lines.reduce((sum, line) => sum + line.quantity, 0);
     $("#cartCount").text(totalItems);
 
-    if (!state.cart.length) {
+    if (!lines.length) {
       $("#cartItems").html('<p class="cart-empty">Your bag is ready for a statement piece.</p>');
       $("#cartTotal").text(formatPrice(0));
+      $("#upiTotal").text(formatPrice(0));
+      refreshCheckoutLinks();
       return;
     }
 
-    let total = 0;
     $("#cartItems").html(
-      state.cart
-        .map((item) => {
-          const product = findProduct(item.id);
-          if (!product) return "";
-          total += product.price * item.quantity;
-          return `
+      lines
+        .map(
+          (line) => `
             <article class="cart-line">
-              <img src="${imageUrl(product.image)}" alt="${escapeHtml(product.name)}">
+              <a href="#product-${escapeHtml(line.product.id)}" data-product-link="${escapeHtml(line.product.id)}">
+                <img src="${imageUrl(line.product.image)}" alt="${escapeHtml(line.product.alt || line.product.name)}">
+              </a>
               <div>
-                <h3>${escapeHtml(product.name)}</h3>
-                <p>${formatPrice(product.price)} each</p>
+                <h3>${escapeHtml(line.product.name)}</h3>
+                <p>${formatPrice(line.product.price)} each</p>
                 <div class="quantity-control" aria-label="Quantity controls">
-                  <button type="button" data-decrease="${escapeHtml(product.id)}">-</button>
-                  <span>${item.quantity}</span>
-                  <button type="button" data-increase="${escapeHtml(product.id)}">+</button>
+                  <button type="button" data-decrease="${escapeHtml(line.product.id)}">-</button>
+                  <span>${line.quantity}</span>
+                  <button type="button" data-increase="${escapeHtml(line.product.id)}">+</button>
                 </div>
               </div>
-              <button class="remove-line" type="button" data-remove="${escapeHtml(product.id)}" aria-label="Remove ${
-            escapeHtml(product.name)
+              <button class="remove-line" type="button" data-remove="${escapeHtml(line.product.id)}" aria-label="Remove ${
+            escapeHtml(line.product.name)
           }">&times;</button>
             </article>
-          `;
-        })
+          `
+        )
         .join("")
     );
-    $("#cartTotal").text(formatPrice(total));
+    $("#cartTotal").text(formatPrice(getCartTotal()));
+    $("#upiTotal").text(formatPrice(getCartTotal()));
+    refreshCheckoutLinks();
   }
 
   function toggleFavorite(productId) {
@@ -530,7 +715,7 @@ $(function () {
 
     $("#quickViewBody").html(`
       <div class="quick-view-media">
-        <img src="${imageUrl(product.image)}" alt="${escapeHtml(product.name)}">
+        <img src="${imageUrl(product.image)}" alt="${escapeHtml(product.alt || product.name)}">
       </div>
       <div class="quick-view-copy">
         <p class="eyebrow">${escapeHtml(product.categoryLabel)}</p>
@@ -541,16 +726,27 @@ $(function () {
           <div><span>Materials</span><strong>${escapeHtml(product.materials)}</strong></div>
           <div><span>Color mood</span><strong>${escapeHtml(product.color)}</strong></div>
           <div><span>Status</span><strong>${escapeHtml(product.stock)}</strong></div>
+          <div><span>Care</span><strong>${escapeHtml(product.care || "Confirm care details on WhatsApp.")}</strong></div>
         </div>
-        <button class="add-to-bag" type="button" data-add="${escapeHtml(product.id)}">Add to bag</button>
+        <div class="quick-actions">
+          <button class="add-to-bag" type="button" data-add="${escapeHtml(product.id)}" ${
+            product.available !== false ? "" : "disabled"
+          }>Add to bag</button>
+          <button class="buy-now" type="button" data-buy="${escapeHtml(product.id)}" ${
+            product.available !== false ? "" : "disabled"
+          }>Buy now</button>
+          <a href="#product-${escapeHtml(product.id)}" data-product-link="${escapeHtml(product.id)}">View product</a>
+        </div>
       </div>
     `);
 
-    document.getElementById("quickView").showModal();
+    const modal = document.getElementById("quickView");
+    if (modal && !modal.open) modal.showModal();
   }
 
   function closeQuickView() {
-    document.getElementById("quickView").close();
+    const modal = document.getElementById("quickView");
+    if (modal && modal.open) modal.close();
   }
 
   function openCart() {
@@ -561,6 +757,147 @@ $(function () {
   function closeCart() {
     $("#cartDrawer, #pageScrim").removeClass("open");
     $("body").removeClass("locked");
+  }
+
+  function getCartLines() {
+    return state.cart
+      .map((item) => {
+        const product = findProduct(item.id);
+        const quantity = Number(item.quantity) || 0;
+        return product && quantity > 0 ? { product, quantity, lineTotal: product.price * quantity } : null;
+      })
+      .filter(Boolean);
+  }
+
+  function getCartTotal() {
+    return getCartLines().reduce((sum, line) => sum + line.lineTotal, 0);
+  }
+
+  function getCustomerInfo() {
+    return {
+      name: $("#customerName").val().trim(),
+      phone: $("#customerPhone").val().trim(),
+      location: $("#customerLocation").val().trim(),
+      pincode: $("#customerPincode").val().trim(),
+      note: $("#customerNote").val().trim()
+    };
+  }
+
+  function validateCheckoutReady(label) {
+    if (!state.cart.length || !getCartLines().length) {
+      showToast("Add at least one product to the bag first.");
+      return false;
+    }
+
+    if (!validateCustomerForm()) {
+      showToast(`Fix the highlighted details for ${label}.`);
+      return false;
+    }
+    return true;
+  }
+
+  function validateCustomerForm(options = {}) {
+    const customer = getCustomerInfo();
+    const cleanPhone = customer.phone.replace(/\D/g, "");
+    const hasValidPhone =
+      /^(\+91[\s-]?)?[6-9][0-9\s-]{9,13}$/.test(customer.phone) &&
+      ((cleanPhone.length === 10 && /^[6-9]/.test(cleanPhone)) ||
+        (cleanPhone.length === 12 && cleanPhone.startsWith("91") && /^[6-9]/.test(cleanPhone.slice(2))));
+    const hasValidPincode = !customer.pincode || /^[1-9][0-9]{5}$/.test(customer.pincode);
+
+    const errors = {
+      customerName: customer.name ? "" : "Name is required.",
+      customerPhone: hasValidPhone ? "" : "Enter a valid India mobile number.",
+      customerLocation: customer.location ? "" : "Delivery location is required.",
+      customerPincode: hasValidPincode ? "" : "Enter a valid 6 digit India pincode."
+    };
+
+    Object.entries(errors).forEach(([id, message]) => setFieldError(id, message));
+    const isValid = Object.values(errors).every((message) => !message);
+    if (!isValid && !options.quiet) {
+      const firstErrorId = Object.keys(errors).find((id) => errors[id]);
+      if (firstErrorId) document.getElementById(firstErrorId)?.focus();
+    }
+    return isValid;
+  }
+
+  function setFieldError(fieldId, message) {
+    const field = $(`#${fieldId}`);
+    const error = $(`#${fieldId}Error`);
+    field.toggleClass("invalid", Boolean(message));
+    error.text(message);
+  }
+
+  function refreshCheckoutLinks() {
+    const total = getCartTotal();
+    const hasCart = total > 0;
+    $("#whatsappCheckout").attr("href", getWhatsAppUrl("WhatsApp order")).toggleClass("disabled", !hasCart);
+    $("#upiConfirmWhatsapp").attr("href", getWhatsAppUrl("UPI payment confirmation")).toggleClass("disabled", !hasCart);
+
+    if (state.checkout.upiId) {
+      $("#upiIdDisplay").text(`UPI ID: ${state.checkout.upiId}`);
+      $("#upiPayLink").attr("href", getUpiUrl()).attr("aria-disabled", "false").removeClass("disabled");
+    } else {
+      $("#upiIdDisplay").text("Add UPI ID in json/checkout.json before going live.");
+      $("#upiPayLink").attr("href", "#").attr("aria-disabled", "true").addClass("disabled");
+    }
+  }
+
+  function buildWhatsAppMessage(paymentMode) {
+    const customer = getCustomerInfo();
+    const lines = getCartLines();
+    const orderId = `NURA-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${Date.now()
+      .toString()
+      .slice(-6)}`;
+    const orderLines = lines
+      .map(
+        (line, index) =>
+          `${index + 1}. ${line.product.name}\nQuantity: ${line.quantity}\nPrice: ${formatPrice(line.product.price)} each\nLine total: ${formatPrice(
+            line.lineTotal
+          )}\nProduct link: ${productLink(line.product)}\nNote: ${line.product.whatsappText || "Confirm product details before dispatch"}`
+      )
+      .join("\n\n");
+
+    return [
+      `Hello ${state.checkout.merchantName || "NURA Jewellery"}, I want to place an order.`,
+      `Order ID: ${orderId}`,
+      "",
+      "Customer details:",
+      `Name: ${customer.name || "-"}`,
+      `Phone: ${customer.phone || "-"}`,
+      `Delivery location: ${customer.location || "-"}`,
+      `Pincode: ${customer.pincode || "-"}`,
+      `Notes: ${customer.note || "-"}`,
+      "",
+      "Products:",
+      orderLines || "-",
+      "",
+      `Grand total: ${formatPrice(getCartTotal())}`,
+      `Payment option: ${paymentMode}`,
+      state.checkout.shipping?.label ? `Shipping: ${state.checkout.shipping.label}` : "Shipping: India delivery",
+      "",
+      "Please confirm product availability, delivery charge if any, and payment verification."
+    ].join("\n");
+  }
+
+  function getWhatsAppUrl(paymentMode) {
+    const number = String(state.checkout.whatsappNumber || "").replace(/\D/g, "");
+    return `https://wa.me/${number}?text=${encodeURIComponent(buildWhatsAppMessage(paymentMode))}`;
+  }
+
+  function getUpiUrl() {
+    const total = getCartTotal();
+    const upiId = state.checkout.upiId || "";
+    const merchant = state.checkout.merchantName || "NURA Jewellery";
+    const note = `NURA order ${Date.now().toString().slice(-6)}`;
+    const params = new URLSearchParams({
+      pa: upiId,
+      pn: merchant,
+      am: String(total),
+      cu: state.checkout.currency || "INR",
+      tn: note
+    });
+    return `upi://pay?${params.toString()}`;
   }
 
   function persistCart() {
@@ -579,7 +916,7 @@ $(function () {
     showToast.timer = window.setTimeout(() => toast.removeClass("show"), 2200);
   }
 
-  function showProductInShop(productId) {
+  function showProductInShop(productId, options = {}) {
     const product = findProduct(productId);
     if (!product) return;
 
@@ -590,9 +927,14 @@ $(function () {
     renderProducts();
     scrollToShop();
 
+    if (options.updateHash && window.history?.pushState) {
+      window.history.pushState(null, "", `#product-${productId}`);
+    }
+
     window.setTimeout(() => {
       const card = $(`[data-id="${productId}"]`);
       card.addClass("spotlight");
+      if (options.openDetails) openQuickView(productId);
       window.setTimeout(() => card.removeClass("spotlight"), 1800);
     }, 260);
   }
@@ -604,6 +946,37 @@ $(function () {
     renderFilters();
     renderProducts();
     scrollToShop();
+  }
+
+  function handleInitialHash() {
+    const hash = window.location.hash || "";
+    if (!hash) return;
+
+    const [targetHash, queryString] = hash.split("?");
+    if (targetHash === "#shop" && queryString) {
+      const params = new URLSearchParams(queryString);
+      const search = params.get("search");
+      if (search) {
+        state.activeFilter = "all";
+        state.searchTerm = search;
+        syncSearchInputs();
+        renderFilters();
+        renderProducts();
+      }
+    }
+
+    if (targetHash.startsWith("#product-")) {
+      const productId = targetHash.replace("#product-", "");
+      window.setTimeout(() => showProductInShop(productId), 300);
+      return;
+    }
+
+    const target = document.querySelector(targetHash);
+    if (target) {
+      window.setTimeout(() => {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
+    }
   }
 
   function scrollToShop() {
@@ -618,6 +991,137 @@ $(function () {
       return;
     }
     inputs.val(state.searchTerm);
+  }
+
+  function productLink(product) {
+    return `${getPublicBaseUrl()}#product-${product.id}`;
+  }
+
+  function getPublicBaseUrl() {
+    const configured = state.checkout.publicSiteUrl || state.site?.seo?.canonicalUrl;
+    if (configured) return configured.endsWith("/") ? configured : `${configured}/`;
+    const basePath = window.location.pathname.endsWith("/")
+      ? window.location.pathname
+      : window.location.pathname.replace(/[^/]*$/, "");
+    return `${window.location.origin}${basePath}`;
+  }
+
+  function absoluteUrl(path) {
+    try {
+      return new URL(imageUrl(path), getPublicBaseUrl()).href;
+    } catch (error) {
+      return imageUrl(path);
+    }
+  }
+
+  function injectStructuredData() {
+    const products = state.products.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      sku: product.sku,
+      image: absoluteUrl(product.image),
+      description: product.seoDescription || product.longDescription || product.description,
+      category: product.categoryLabel,
+      brand: {
+        "@type": "Brand",
+        name: state.site.brand.name
+      },
+      offers: {
+        "@type": "Offer",
+        priceCurrency: state.checkout.currency || "INR",
+        price: String(product.price),
+        availability:
+          product.available === false
+            ? "https://schema.org/OutOfStock"
+            : product.stock === "Limited" || product.stock === "Few left"
+            ? "https://schema.org/LimitedAvailability"
+            : "https://schema.org/InStock",
+        url: productLink(product)
+      }
+    }));
+
+    const graph = [
+      {
+        "@type": "Organization",
+        name: state.checkout.merchantName || state.site.brand.name,
+        url: getPublicBaseUrl(),
+        logo: absoluteUrl(state.site.brand.logo),
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: state.checkout.whatsappDisplay || "+91 96388 33888",
+          contactType: "customer service",
+          areaServed: "IN",
+          availableLanguage: ["en", "hi"]
+        }
+      },
+      {
+        "@type": "WebSite",
+        name: state.site.seo?.title || "NURA Jewellery",
+        url: getPublicBaseUrl(),
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${getPublicBaseUrl()}#shop?search={search_term_string}`,
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "ItemList",
+        name: "NURA Jewellery product collection",
+        itemListElement: products.map((product, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: product
+        }))
+      }
+    ];
+
+    if (state.site.faqs?.length) {
+      graph.push({
+        "@type": "FAQPage",
+        mainEntity: state.site.faqs.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer
+          }
+        }))
+      });
+    }
+
+    $("#nuraStructuredData").remove();
+    $("<script>", {
+      id: "nuraStructuredData",
+      type: "application/ld+json",
+      text: JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": graph
+      })
+    }).appendTo("head");
+  }
+
+  function updateMeta(name, content) {
+    if (!content) return;
+    let meta = $(`meta[name="${name}"]`);
+    if (!meta.length) {
+      meta = $("<meta>", { name }).appendTo("head");
+    }
+    meta.attr("content", content);
+  }
+
+  function updateMetaProperty(property, content) {
+    if (!content) return;
+    let meta = $(`meta[property="${property}"]`);
+    if (!meta.length) {
+      meta = $("<meta>", { property }).appendTo("head");
+    }
+    meta.attr("content", content);
+  }
+
+  function safeHref(href) {
+    const value = String(href || "#");
+    if (/^(#|https?:\/\/|mailto:|tel:)/i.test(value)) return escapeHtml(value);
+    return "#";
   }
 
   function readStorage(key, fallback) {

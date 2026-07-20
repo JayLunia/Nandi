@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="NURA favicon">
+  <rect width="64" height="64" rx="16" fill="#330025"/>
+  <path d="M16 44V20h6l18 15.4V20h8v24h-6L24 28.6V44z" fill="#f6e9dc"/>
+  <path d="M14 50h36" stroke="#d8b56d" stroke-width="3" stroke-linecap="round"/>
+</svg>
