@@ -141,17 +141,17 @@ This does not use Node.
 
 This site is ready for GitHub Pages because every file is static.
 
-Recommended Pages source:
-
-```text
-Branch: gh-pages
-Folder: /
-```
-
-Alternative source:
+Current Pages source for this repository:
 
 ```text
 Branch: main
+Folder: /
+```
+
+The `gh-pages` branch is also kept updated with the same static site files. You can switch Pages to this branch later if you prefer a dedicated publishing branch:
+
+```text
+Branch: gh-pages
 Folder: /
 ```
 
