@@ -1,0 +1,251 @@
+window.NURA_SITE_DATA = {
+  "brand": {
+    "name": "NURA",
+    "logo": "assets/images/brand/nura-logo.JPG",
+    "footerCopy": "NURA is a contemporary boho crystal jewellery brand creating pieces for everyday wear, special occasions and meaningful gifting. Designed to be worn, loved and lived in."
+  },
+  "seo": {
+    "title": "NURA Jewellery | Contemporary Boho Crystal Jewellery for Everyday Wear",
+    "description": "Shop NURA contemporary boho crystal jewellery designed to be worn, loved and lived in. Explore necklaces, bracelets, earrings, pendants and meaningful gift-ready pieces for everyday wear and special occasions.",
+    "keywords": "NURA jewellery, contemporary boho crystal jewellery, crystal jewellery India, everyday crystal jewellery, boho necklaces, crystal bracelets, crystal earrings, meaningful jewellery gifts",
+    "canonicalUrl": "https://jaylunia.github.io/Nandi/"
+  },
+  "hero": {
+    "eyebrow": "Contemporary Boho Crystal Jewellery",
+    "title": "Jewellery designed to be worn, loved and lived in.",
+    "titleLines": [
+      "Jewellery designed",
+      "to be worn, loved",
+      "and lived in."
+    ],
+    "copy": "NURA creates crystal-led jewellery for everyday styling, special occasions and meaningful gifting. Explore boho necklaces, bracelets, earrings, pendants and curated pieces made to carry beauty, intention and personal expression.",
+    "primaryCta": "Shop crystal jewellery",
+    "primaryHref": "shop.html",
+    "secondaryCta": "Explore NURA story",
+    "secondaryHref": "story.html",
+    "slides": [
+      {
+        "kicker": "Everyday intention",
+        "title": "Noir Fan Collar",
+        "copy": "A dark stone-detail necklace for layered looks, evening styling and expressive everyday wear.",
+        "price": 4499,
+        "status": "Limited",
+        "targetProduct": "noir-fan-collar",
+        "image": "defa1ea8-98a5-4aa4-b61e-7a90c1c58cb4.JPG"
+      },
+      {
+        "kicker": "Gift-ready glow",
+        "title": "Citrine Garden Necklace",
+        "copy": "Warm yellow stones and boho styling for birthdays, celebrations and meaningful gifting.",
+        "price": 5299,
+        "status": "New",
+        "targetProduct": "citrine-garden-necklace",
+        "image": "eef6d1f9-7140-47db-8ad5-35833c2d76a2.JPG"
+      },
+      {
+        "kicker": "Occasion edit",
+        "title": "Rose Drape Set",
+        "copy": "Layered rose-tone details with an easy special-occasion silhouette.",
+        "price": 6299,
+        "status": "Few left",
+        "targetProduct": "rose-drape-set",
+        "image": "aa4ef21d-5796-4539-b7d0-ae3dc36127ec.JPG"
+      }
+    ]
+  },
+  "marquee": [
+    "Contemporary boho crystal jewellery",
+    "Everyday wear and special occasions",
+    "Necklaces, bracelets, earrings and pendants",
+    "Meaningful gifting",
+    "Process-led small brand",
+    "Designed to be worn, loved and lived in"
+  ],
+  "about": {
+    "eyebrow": "About NURA",
+    "title": "Crystal jewellery with everyday meaning.",
+    "cards": [
+      {
+        "title": "Wearable",
+        "copy": "Pieces are chosen for daily styling, layering and special moments, so jewellery can move naturally through real life."
+      },
+      {
+        "title": "Meaningful",
+        "copy": "NURA uses crystal symbolism and intention-led language as a personal lifestyle expression, not as medical advice."
+      },
+      {
+        "title": "Expressive",
+        "copy": "Colour, form, mood and styling help every piece feel personal, gift-ready and easy to connect with."
+      }
+    ]
+  },
+  "collections": [
+    {
+      "kicker": "Edit 01",
+      "title": "Everyday Crystal Pieces",
+      "copy": "Easy-to-style jewellery for daily wear, layering and quiet personal meaning.",
+      "targetCategory": "necklaces",
+      "image": "0c15bea5-a170-4347-81e1-e86890b31da9.JPG"
+    },
+    {
+      "kicker": "Edit 02",
+      "title": "Occasion & Gift Edits",
+      "copy": "Crystal-led pieces for birthdays, celebrations, festive outfits and thoughtful gifting.",
+      "targetCategory": "sets",
+      "image": "aa4ef21d-5796-4539-b7d0-ae3dc36127ec.JPG"
+    },
+    {
+      "kicker": "Edit 03",
+      "title": "For Healers & Intention Wearers",
+      "copy": "Symbolic jewellery for people drawn to crystals, energy work, manifestation and mindful styling.",
+      "targetCategory": "pendants",
+      "image": "4414665b-23c7-4365-a617-f62e47ed218c.JPG"
+    }
+  ],
+  "process": {
+    "eyebrow": "Process",
+    "title": "Selected, styled and shared with intention.",
+    "steps": [
+      {
+        "title": "Select",
+        "copy": "Crystal-led and boho-inspired pieces are chosen for their look, feel and everyday wearability."
+      },
+      {
+        "title": "Style",
+        "copy": "Jewellery is arranged into daily, occasion, gifting and intention-led edits so customers can shop by mood."
+      },
+      {
+        "title": "Share",
+        "copy": "Customers can explore, save, order and confirm details directly through WhatsApp."
+      }
+    ]
+  },
+  "atelier": {
+    "eyebrow": "For healers and seekers",
+    "title": "Beauty, mood and intention in one wearable piece.",
+    "copy": "NURA welcomes people who connect with crystals, energy, manifestation and emotional meaning. The jewellery is wearable symbolism for those who like their accessories to carry beauty, mood and intention.",
+    "secondaryAlt": "NURA bracelet stack display",
+    "images": [
+      "54c56843-c267-4c73-b627-0de42d9a775a.JPG",
+      "37b3fa8b-c853-4719-9157-d0b97d945180.JPG"
+    ],
+    "stats": [
+      {
+        "value": "12",
+        "label": "editable product listings"
+      },
+      {
+        "value": "6",
+        "label": "boho jewellery categories"
+      },
+      {
+        "value": "100%",
+        "label": "catalog managed from JSON"
+      }
+    ]
+  },
+  "services": [
+    {
+      "symbol": "N",
+      "title": "WhatsApp Ordering",
+      "copy": "Customers can send their name, phone number, delivery location, product links, quantity and total directly to NURA on WhatsApp."
+    },
+    {
+      "symbol": "+",
+      "title": "UPI Payment Ready",
+      "copy": "The cart includes a direct UPI payment section with an editable QR image and UPI ID configuration for India."
+    },
+    {
+      "symbol": "*",
+      "title": "Easy Product Updates",
+      "copy": "Add, remove or edit jewellery by changing product objects in products.json and placing photos in the product image folder."
+    }
+  ],
+  "trust": {
+    "eyebrow": "Worn, loved and shared",
+    "title": "Trust grows through real products, process and customer moments.",
+    "copy": "NURA's content pillars include products, process, display, behind-the-scenes moments, happy customers and happy faces. Add real customer photos, order screenshots, display images and short customer notes here as they become available.",
+    "badges": [
+      "WhatsApp order support",
+      "UPI payment option",
+      "Customer confirmation before dispatch",
+      "Real product photography",
+      "Editable product details"
+    ]
+  },
+  "faqs": [
+    {
+      "question": "How do I place an order?",
+      "answer": "Add pieces to your bag, enter your details and send the order summary to NURA on WhatsApp for confirmation."
+    },
+    {
+      "question": "Is NURA jewellery for everyday wear?",
+      "answer": "Yes. NURA's brand direction is built around crystal jewellery designed to be worn, loved and lived in."
+    },
+    {
+      "question": "Are all pieces genuine crystal?",
+      "answer": "Some NURA pieces may use crystal or stone details, but each product should be checked individually. Product material details are listed clearly before purchase."
+    },
+    {
+      "question": "Can I buy jewellery as a gift?",
+      "answer": "Yes. NURA pieces are suitable for meaningful gifting, special occasions and personal styling."
+    },
+    {
+      "question": "Is crystal jewellery a medical or healing treatment?",
+      "answer": "No. NURA uses crystal meaning and intention as symbolic lifestyle language, not as medical advice or treatment."
+    }
+  ],
+  "footerColumns": [
+    {
+      "title": "Explore",
+      "links": [
+        {
+          "label": "NURA story",
+          "href": "story.html"
+        },
+        {
+          "label": "Shop jewellery",
+          "href": "shop.html"
+        },
+        {
+          "label": "Lookbook",
+          "href": "lookbook.html"
+        }
+      ]
+    },
+    {
+      "title": "Community",
+      "links": [
+        {
+          "label": "Process",
+          "href": "story.html#process"
+        },
+        {
+          "label": "For healers",
+          "href": "story.html#atelier"
+        },
+        {
+          "label": "Customer trust",
+          "href": "story.html#trust"
+        }
+      ]
+    },
+    {
+      "title": "Order",
+      "links": [
+        {
+          "label": "WhatsApp NURA",
+          "href": "https://wa.me/919638833888"
+        },
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/nurajewels.co/"
+        },
+        {
+          "label": "FAQ",
+          "href": "faq.html"
+        }
+      ]
+    }
+  ]
+};

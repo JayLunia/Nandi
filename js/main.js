@@ -74,33 +74,34 @@ $(function () {
 
   ensureSharedChrome();
 
-  $.when($.getJSON("json/site.json"), $.getJSON("json/products.json"), $.getJSON("json/checkout.json"))
-    .done(function (siteResponse, productResponse, checkoutResponse) {
-      state.site = siteResponse[0];
-      state.checkout = { ...state.checkout, ...(checkoutResponse[0] || {}) };
-      const productData = productResponse[0];
-      state.products = productData.products || [];
-      state.categories = productData.categories || [];
-      state.lookbook = productData.lookbook || [];
+  const siteData = window.NURA_SITE_DATA || null;
+  const productData = window.NURA_PRODUCTS_DATA || null;
+  const checkoutData = window.NURA_CHECKOUT_DATA || null;
 
-      hydrateSeo();
-      hydrateSite();
-      renderFilters();
-      renderProducts();
-      renderCheckoutConfig();
-      updateCart();
-      bindEvents();
-      revealOnScroll();
-      injectStructuredData();
-      handleInitialHash();
-      setTimeout(() => $("#loader").addClass("hide"), 650);
-    })
-    .fail(function () {
-      $("#loader").addClass("hide");
-      $("main").prepend(
-        '<section class="section-shell json-warning"><p class="eyebrow">Preview setup</p><h1>Open through GitHub Pages.</h1><p>The browser blocked the JSON product files because this was opened directly from your computer. Once the same folder is published on GitHub Pages, products load normally from <code>json/products.json</code>. For local preview without Node, use a simple static server or the VS Code Live Server extension.</p></section>'
-      );
-    });
+  if (siteData && productData && checkoutData) {
+    state.site = siteData;
+    state.checkout = { ...state.checkout, ...(checkoutData || {}) };
+    state.products = productData.products || [];
+    state.categories = productData.categories || [];
+    state.lookbook = productData.lookbook || [];
+
+    hydrateSeo();
+    hydrateSite();
+    renderFilters();
+    renderProducts();
+    renderCheckoutConfig();
+    updateCart();
+    bindEvents();
+    revealOnScroll();
+    injectStructuredData();
+    handleInitialHash();
+    setTimeout(() => $("#loader").addClass("hide"), 650);
+  } else {
+    $("#loader").addClass("hide");
+    $("main").prepend(
+      '<section class="section-shell json-warning"><p class="eyebrow">Preview setup</p><h1>Content ready for local preview.</h1><p>The site is using bundled JavaScript data files so it can open directly from your computer without a remote fetch or HTTPS dependency.</p></section>'
+    );
+  }
 
   function hydrateSeo() {
     const seo = state.site?.seo || {};
