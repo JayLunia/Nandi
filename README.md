@@ -1,198 +1,91 @@
-# NURA Jewellery Website
+# NURA
 
-NURA is a contemporary boho crystal jewellery brand built around wearable meaning, real product photography, gifting, and everyday styling. This repository contains a static multi-page ecommerce display website for NURA with editable JavaScript content files, product search, product filters, a persistent cart, WhatsApp order checkout, and India UPI payment readiness.
+NURA is a fashion jewellery brand created for people who love expressive, wearable pieces with a soft boho spirit. The brand brings together crystal-inspired details, layered textures, statement charms, and everyday styling so jewellery can feel personal, meaningful, and easy to wear.
 
-The project is intentionally built without Node or a build step. It uses HTML, CSS, Bootstrap, jQuery, and local JavaScript data files so it can be hosted directly on GitHub Pages without relying on JSON fetches from the browser.
+NURA is designed for modern wardrobes: jewellery that can move from casual daily outfits to festive moments, gifting occasions, travel looks, and styled photoshoots. Each piece is presented with real product imagery so customers can understand the shape, colour, finish, and styling mood before they choose.
 
-## Live Site
+## Brand Essence
 
-- GitHub repository: `https://github.com/JayLunia/Nandi`
-- GitHub Pages URL: `https://jaylunia.github.io/Nandi/`
+NURA is built around three ideas: beauty, intention, and everyday confidence.
 
-## Website Pages
+The jewellery is made to feel expressive without being difficult to style. A NURA piece can be worn alone as a small accent or layered with other pieces for a stronger look. The brand aesthetic is feminine, warm, crystal-led, and slightly bohemian, with a focus on jewellery that feels special but still wearable.
 
-The live website files are inside `docs/`.
+## What NURA Offers
 
-- `docs/index.html` - Home page with animated hero, brand highlights, collection edits, ordering system cards, and newsletter form.
-- `docs/shop.html` - Product catalogue with JavaScript-data-driven products, category filters, search, sorting, quick view, add to bag, buy now, and checkout.
-- `docs/story.html` - NURA brand story, content pillars, selection process, atelier note, trust badges, and storefront system details.
-- `docs/lookbook.html` - Visual product photography page. Each image links back to the matching shop product.
-- `docs/faq.html` - Ordering, payment, product care, gifting, and crystal-language FAQ.
+NURA focuses on fashion jewellery with a curated, boutique feel. The collection includes:
 
-## Core Features
+- Necklaces for daily styling, statement looks, and layered outfits.
+- Earrings that range from soft minimal details to bold fashion pieces.
+- Bracelets and charms for personal styling and gift-ready combinations.
+- Crystal-inspired pieces for customers who enjoy symbolic and meaningful jewellery.
+- Occasion-ready accessories for birthdays, celebrations, festive dressing, and personal gifting.
 
-- Multi-page static website ready for GitHub Pages.
-- Editable content from `docs/js/site-data.js`, `docs/js/products-data.js`, and `docs/js/checkout-data.js`.
-- Product cards generated from JavaScript data, not hard-coded in HTML.
-- Search, category filtering, sorting, quick view, add to bag, and buy now actions.
-- Cart persists with `localStorage`, so hard refresh does not clear the bag.
-- WhatsApp checkout sends customer name, phone, location, pincode, notes, product links, quantity, and total amount.
-- UPI section is ready for India payments after a real UPI ID and QR image are added.
-- SEO metadata, Open Graph tags, canonical URLs, product structured data, and FAQ structured data.
-- Local Bootstrap CSS and local jQuery file, so the site does not depend on npm.
+Each product is selected to support styling, gifting, and self-expression rather than only decoration.
 
-## Project Structure
+## Aesthetic
 
-```text
-.
-├── docs/
-│   ├── index.html
-│   ├── shop.html
-│   ├── story.html
-│   ├── lookbook.html
-│   ├── faq.html
-│   ├── css/
-│   │   ├── bootstrap.min.css
-│   │   └── style.css
-│   ├── assets/
-│   │   └── images/
-│   │       ├── brand/
-│   │       ├── products/
-│   │       └── payments/
-│   └── js/
-│       ├── jquery-3.7.1.min.js
-│       ├── site-data.js
-│       ├── products-data.js
-│       ├── checkout-data.js
-│       └── main.js
-└── .github/
-    └── workflows/
-        └── pages.yml
-```
+The NURA look is soft, polished, and expressive. It combines neutral luxury tones, warm metallic details, crystal-inspired accents, and product-focused photography. The brand avoids a loud or overly commercial look and instead presents jewellery in a calm, elegant, and attractive way.
 
-## Editing Content
+The visual style is inspired by:
 
-Use `docs/js/site-data.js` for brand-level content:
+- Boho fashion jewellery.
+- Crystal and stone-inspired accessories.
+- Soft feminine styling.
+- Giftable everyday luxury.
+- Minimal but expressive product presentation.
 
-- Brand name, logo path, and footer copy.
-- Homepage hero text and hero slides.
-- Marquee text.
-- About cards.
-- Collection edit cards.
-- Process cards.
-- Atelier section.
-- Service cards.
-- Trust badges.
-- FAQ content.
-- Footer links.
-- Main SEO title, description, keywords, and canonical URL.
+## For Everyday Styling
 
-Use `docs/js/products-data.js` for catalogue content:
+NURA jewellery is made for customers who want accessories that feel easy to use. The pieces can be styled with dresses, shirts, kurtis, co-ord sets, denim, festive outfits, and casual looks.
 
-- Product name, SKU, slug, category, price, and availability.
-- Badge, stock label, colour mood, material notes, care notes, and shipping note.
-- Short and long product descriptions.
-- Product image filename.
-- Product SEO title, SEO description, and keywords.
-- Lookbook entries and their target product links.
+A simple necklace can finish a daily outfit. A bold pair of earrings can become the main focus of a look. A charm or bracelet can add a personal detail. NURA is about making jewellery feel natural, not complicated.
 
-Use `docs/js/checkout-data.js` for ordering and payment settings:
+## For Gifting
 
-- WhatsApp number.
-- Display phone number.
-- Currency and locale.
-- Public GitHub Pages URL.
-- UPI ID.
-- UPI QR image path.
-- Shipping and checkout notes.
+Jewellery is one of the easiest ways to give something personal. NURA pieces are suitable for birthdays, friendship gifts, festive gifting, thank-you gifts, self-care purchases, and special moments.
 
-## Adding A Product
+The brand language is warm and personal, making the collection suitable for customers who want a thoughtful gift without needing to over-explain it.
 
-1. Add the product image to `docs/assets/images/products/`.
-2. Open `docs/js/products-data.js`.
-3. Copy an existing product object.
-4. Change the `id`, `sku`, `slug`, `name`, `category`, `price`, `image`, descriptions, and SEO fields.
-5. Make sure the `category` matches one of the category IDs in the same file.
-6. Save the file and preview `docs/shop.html`.
+## Crystal-Inspired Meaning
 
-Do not leave duplicate product IDs. The cart, product links, quick view, and WhatsApp checkout all use the product `id`.
+Many customers are drawn to crystal-inspired jewellery because of the feeling, symbolism, and visual beauty it brings. NURA uses careful wording around crystal-led and stone-inspired pieces, focusing on personal meaning, style, and emotional connection.
 
-## Payment Setup
+The brand does not make medical or guaranteed healing claims. Instead, NURA celebrates jewellery as a way to express mood, intention, identity, and personal taste.
 
-WhatsApp checkout is already configured for:
+## Shopping Experience
 
-```text
-+91 96388 33888
-```
+NURA is designed to make online browsing simple and visual. Customers can explore products, view real images, search by style, add products to a bag, and place orders through WhatsApp.
 
-UPI is intentionally not live yet. Before accepting direct UPI payments:
+The order experience is made for India-based customers, with WhatsApp ordering and UPI payment readiness. Customers can share their name, phone number, location, product quantity, and order details directly through the checkout flow.
 
-1. Replace `docs/assets/images/payments/upi-qr-placeholder.svg` with the real UPI QR image.
-2. Update `upiQrImage` in `docs/js/checkout-data.js` if the filename changes.
-3. Add the real UPI ID in `docs/js/checkout-data.js`.
-4. Test a cart checkout and confirm the total shown near the QR is correct.
+## Care Philosophy
 
-Until the real UPI ID is added, the direct UPI button stays disabled.
+NURA encourages customers to treat jewellery with care so pieces stay beautiful for longer.
 
-## Local Preview
+Recommended care:
 
-The site is designed to work locally without a server because the content is bundled into JavaScript files. You can open `docs/index.html` directly in a browser from your computer.
+- Keep jewellery away from water, perfume, sweat, and harsh chemicals.
+- Store pieces separately to avoid scratches and tangling.
+- Wipe gently with a soft dry cloth after use.
+- Remove jewellery before bathing, sleeping, swimming, or heavy activity.
+- Keep pieces in a dry place when not in use.
 
-You can still preview it with a simple static server if you want:
+Good care helps fashion jewellery maintain its shine, finish, and shape.
 
-```bash
-cd docs
-python3 -m http.server 8000
-```
+## Brand Voice
 
-Then open:
+NURA speaks in a tone that is elegant, warm, simple, and trustworthy. The brand is not overly technical or exaggerated. It focuses on real product beauty, styling confidence, and meaningful personal details.
 
-```text
-http://localhost:8000/
-```
+The voice of NURA is:
 
-This does not use Node.
+- Soft but confident.
+- Stylish but easy to understand.
+- Feminine without being childish.
+- Premium without feeling distant.
+- Honest about materials, care, and product expectations.
 
-## GitHub Pages Deployment
+## Promise
 
-This site is ready for GitHub Pages because every file is static.
+NURA exists to make jewellery feel personal, beautiful, and easy to choose. The brand brings together attractive product styling, meaningful details, and a smooth shopping experience for customers who want jewellery that adds feeling to everyday life.
 
-Current Pages source for this repository:
-
-```text
-Branch: main
-Folder: /docs
-```
-
-The repository also includes a GitHub Actions workflow in `.github/workflows/pages.yml` that publishes the contents of the `docs/` folder automatically.
-
-The `gh-pages` branch is also kept updated with the same static site files. You can switch Pages to this branch later if you prefer a dedicated publishing branch:
-
-```text
-Branch: gh-pages
-Folder: /
-```
-
-After pushing changes, GitHub Pages can take a few minutes to publish. If GitHub has an Actions or API outage, the repository may push successfully while the live Pages URL updates later.
-
-## Brand And Content Guidelines
-
-Use careful crystal wording unless materials are verified for every product.
-
-Good wording:
-
-- `crystal-led`
-- `stone-detail`
-- `crystal-inspired`
-- `meaningful`
-- `symbolic`
-- `intention-led`
-- `everyday wearable`
-
-Avoid unsupported claims:
-
-- Guaranteed healing.
-- Medical treatment or cure language.
-- Certified genuine crystals unless certification exists.
-- Waterproof or tarnish-free unless tested.
-- Handmade, made in India, or shipping promises unless verified by the brand.
-
-## Maintenance Checklist
-
-- Check JavaScript syntax after editing the data files.
-- Check that every product image path exists.
-- Test `docs/shop.html` search, filters, sorting, quick view, add to bag, buy now, and checkout.
-- Test cart persistence after a hard refresh.
-- Test WhatsApp checkout message contents.
-- Replace the UPI placeholder before accepting payments.
-- Keep product copy accurate and avoid unsupported material claims.
+NURA is for the person who wants a piece that feels like them.
