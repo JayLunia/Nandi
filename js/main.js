@@ -3,6 +3,7 @@ $(function () {
   const FAVORITES_KEY = "nura-favorites";
 
   const state = {
+    page: $("body").data("page") || "home",
     site: null,
     checkout: {
       currency: "INR",
@@ -25,6 +26,39 @@ $(function () {
     favorites: readStorage(FAVORITES_KEY, [])
   };
 
+  const pageMeta = {
+    home: {
+      path: "",
+      title: "NURA Jewellery | Contemporary Boho Crystal Jewellery for Everyday Wear",
+      description:
+        "Shop NURA contemporary boho crystal jewellery designed to be worn, loved and lived in. Explore necklaces, bracelets, earrings, pendants and meaningful gift-ready pieces."
+    },
+    shop: {
+      path: "shop.html",
+      title: "Shop NURA Jewellery | Boho Crystal Necklaces, Bracelets and Earrings",
+      description:
+        "Browse the NURA jewellery shop for crystal-led necklaces, bracelets, earrings, pendants, rings and curated gift-ready pieces with WhatsApp and UPI checkout options."
+    },
+    story: {
+      path: "story.html",
+      title: "NURA Story | Contemporary Boho Crystal Jewellery Brand",
+      description:
+        "Learn about NURA, a contemporary boho crystal jewellery brand built around wearable meaning, everyday styling, gifting, process and real product photography."
+    },
+    lookbook: {
+      path: "lookbook.html",
+      title: "NURA Lookbook | Crystal Jewellery Product Photography and Styling",
+      description:
+        "Explore the NURA jewellery lookbook with product photography, crystal-led styling ideas, display trays, pendant strands, bracelets, earrings and gift-ready edits."
+    },
+    faq: {
+      path: "faq.html",
+      title: "NURA FAQ | Ordering, WhatsApp Checkout and UPI Payment",
+      description:
+        "Find NURA jewellery order information, WhatsApp checkout details, India UPI payment notes, product care guidance and crystal jewellery wording."
+    }
+  };
+
   const imageUrl = (path) => {
     if (!path) return "";
     if (/^(https?:|data:|\/|assets\/)/i.test(path)) return path;
@@ -37,6 +71,8 @@ $(function () {
       currency: state.checkout.currency || "INR",
       maximumFractionDigits: 0
     }).format(Number(price) || 0);
+
+  ensureSharedChrome();
 
   $.when($.getJSON("json/site.json"), $.getJSON("json/products.json"), $.getJSON("json/checkout.json"))
     .done(function (siteResponse, productResponse, checkoutResponse) {
@@ -68,15 +104,20 @@ $(function () {
 
   function hydrateSeo() {
     const seo = state.site?.seo || {};
-    if (seo.title) document.title = seo.title;
-    updateMeta("description", seo.description);
+    const currentPageMeta = pageMeta[state.page] || pageMeta.home;
+    const title = currentPageMeta.title || seo.title;
+    const description = currentPageMeta.description || seo.description;
+    const canonicalUrl = pageUrl(currentPageMeta.path);
+
+    if (title) document.title = title;
+    updateMeta("description", description);
     updateMeta("keywords", seo.keywords);
     updateMeta("robots", "index, follow");
-    updateMetaProperty("og:title", seo.title);
-    updateMetaProperty("og:description", seo.description);
-    updateMetaProperty("og:url", seo.canonicalUrl || getPublicBaseUrl());
+    updateMetaProperty("og:title", title);
+    updateMetaProperty("og:description", description);
+    updateMetaProperty("og:url", canonicalUrl);
     updateMetaProperty("og:image", absoluteUrl(state.site.brand.logo));
-    $("link[rel='canonical']").attr("href", seo.canonicalUrl || getPublicBaseUrl());
+    $("link[rel='canonical']").attr("href", canonicalUrl);
   }
 
   function hydrateSite() {
@@ -91,8 +132,8 @@ $(function () {
       $("#heroTitle").text(hero.title);
     }
     $("#heroCopy").text(hero.copy);
-    $(".primary-link").text(hero.primaryCta);
-    $(".secondary-link").text(hero.secondaryCta).attr("href", hero.secondaryHref || "#lookbook");
+    $("[data-hero-primary]").text(hero.primaryCta).attr("href", hero.primaryHref || "shop.html");
+    $("[data-hero-secondary]").text(hero.secondaryCta).attr("href", hero.secondaryHref || "story.html");
 
     if (slides.length) {
       setHeroSlide(0);
@@ -125,7 +166,9 @@ $(function () {
       (site.collections || [])
         .map(
           (item) => `
-            <a class="collection-card" href="#shop" data-shop-category="${escapeHtml(item.targetCategory || "all")}">
+            <a class="collection-card" href="${shopHref({ category: item.targetCategory || "all" })}" data-shop-category="${escapeHtml(
+            item.targetCategory || "all"
+          )}">
               <img src="${imageUrl(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy">
               <div>
                 <p class="eyebrow">${escapeHtml(item.kicker)}</p>
@@ -171,10 +214,10 @@ $(function () {
     );
     $("#atelierStage").html(`
       <div class="orbit-line" aria-hidden="true"></div>
-      <a class="floating-piece large" href="#shop" data-shop-product="amethyst-drop-collar">
+      <a class="floating-piece large" href="${productHref("amethyst-drop-collar")}" data-shop-product="amethyst-drop-collar">
         <img src="${imageUrl(site.atelier.images[0])}" alt="${escapeHtml(site.atelier.title)}" loading="lazy">
       </a>
-      <a class="floating-piece small" href="#shop" data-shop-product="bracelet-color-bar">
+      <a class="floating-piece small" href="${productHref("bracelet-color-bar")}" data-shop-product="bracelet-color-bar">
         <img src="${imageUrl(site.atelier.images[1])}" alt="${escapeHtml(site.atelier.secondaryAlt)}" loading="lazy">
       </a>
     `);
@@ -183,7 +226,7 @@ $(function () {
       state.lookbook
         .map(
           (item) => `
-            <a class="lookbook-tile reveal" href="#shop" data-shop-product="${escapeHtml(item.targetProduct || "")}">
+            <a class="lookbook-tile reveal" href="${productHref(item.targetProduct || "")}" data-shop-product="${escapeHtml(item.targetProduct || "")}">
               <img src="${imageUrl(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy">
               <div>
                 <h3>${escapeHtml(item.title)}</h3>
@@ -260,7 +303,7 @@ $(function () {
     $("#heroBg").css("background-image", `url("${imageUrl(slide.image)}")`);
     $("#heroShowcase").html(`
       <article class="hero-card">
-        <a class="hero-image-link" href="#shop" data-shop-product="${escapeHtml(slide.targetProduct || "")}">
+        <a class="hero-image-link" href="${productHref(slide.targetProduct || "")}" data-shop-product="${escapeHtml(slide.targetProduct || "")}">
           <img src="${imageUrl(slide.image)}" alt="${escapeHtml(slide.title)}">
         </a>
         <div>
@@ -289,6 +332,8 @@ $(function () {
   }
 
   function renderFilters() {
+    if (!$("#filterPills").length) return;
+
     $("#filterPills").html(
       state.categories
         .map(
@@ -347,6 +392,8 @@ $(function () {
   }
 
   function renderProducts() {
+    if (!$("#productGrid").length) return;
+
     const products = getVisibleProducts();
 
     if (!products.length) {
@@ -362,7 +409,7 @@ $(function () {
           return `
             <article class="product-card card" id="product-${escapeHtml(product.id)}" data-id="${escapeHtml(product.id)}">
               <div class="product-media">
-                <a class="product-image-button" href="#product-${escapeHtml(product.id)}" data-product-link="${escapeHtml(
+                <a class="product-image-button" href="${productHref(product.id)}" data-product-link="${escapeHtml(
             product.id
           )}" aria-label="Open ${escapeHtml(product.name)} details">
                   <img src="${imageUrl(product.image)}" alt="${escapeHtml(product.alt || product.name)}" loading="lazy">
@@ -388,7 +435,7 @@ $(function () {
                   <button class="buy-now" type="button" data-buy="${escapeHtml(product.id)}" ${
             isAvailable ? "" : "disabled"
           }>Buy now</button>
-                  <a class="quick-open" href="#product-${escapeHtml(product.id)}" data-product-link="${escapeHtml(product.id)}">View</a>
+                  <a class="quick-open" href="${productHref(product.id)}" data-product-link="${escapeHtml(product.id)}">View</a>
                 </div>
               </div>
             </article>
@@ -416,8 +463,12 @@ $(function () {
 
   function bindEvents() {
     $(window).on("scroll", onScroll);
-    $(window).on("hashchange", handleInitialHash);
+    $(window).on("hashchange", function () {
+      handleInitialHash();
+      markActiveNavigation();
+    });
     onScroll();
+    markActiveNavigation();
 
     $(document).on("click", ".slide-dot", function () {
       setHeroSlide(Number($(this).data("slide")));
@@ -449,7 +500,7 @@ $(function () {
         window.clearTimeout(bindEvents.headerSearchTimer);
         bindEvents.headerSearchTimer = window.setTimeout(() => {
           $("#searchPanel").removeClass("open");
-          scrollToShop();
+          goToShop({ search: state.searchTerm });
         }, 450);
       }
     });
@@ -458,7 +509,7 @@ $(function () {
       if (event.key === "Enter") {
         event.preventDefault();
         $("#searchPanel").removeClass("open");
-        scrollToShop();
+        goToShop({ search: state.searchTerm });
       }
     });
 
@@ -674,7 +725,7 @@ $(function () {
         .map(
           (line) => `
             <article class="cart-line">
-              <a href="#product-${escapeHtml(line.product.id)}" data-product-link="${escapeHtml(line.product.id)}">
+              <a href="${productHref(line.product.id)}" data-product-link="${escapeHtml(line.product.id)}">
                 <img src="${imageUrl(line.product.image)}" alt="${escapeHtml(line.product.alt || line.product.name)}">
               </a>
               <div>
@@ -735,7 +786,7 @@ $(function () {
           <button class="buy-now" type="button" data-buy="${escapeHtml(product.id)}" ${
             product.available !== false ? "" : "disabled"
           }>Buy now</button>
-          <a href="#product-${escapeHtml(product.id)}" data-product-link="${escapeHtml(product.id)}">View product</a>
+          <a href="${productHref(product.id)}" data-product-link="${escapeHtml(product.id)}">View product</a>
         </div>
       </div>
     `);
@@ -920,6 +971,11 @@ $(function () {
     const product = findProduct(productId);
     if (!product) return;
 
+    if (!hasShopSection()) {
+      window.location.href = productHref(productId);
+      return;
+    }
+
     state.activeFilter = "all";
     state.searchTerm = "";
     syncSearchInputs();
@@ -940,6 +996,11 @@ $(function () {
   }
 
   function showCategoryInShop(categoryId) {
+    if (!hasShopSection()) {
+      window.location.href = shopHref({ category: categoryId || "all" });
+      return;
+    }
+
     state.activeFilter = categoryId || "all";
     state.searchTerm = "";
     syncSearchInputs();
@@ -956,6 +1017,12 @@ $(function () {
     if (targetHash === "#shop" && queryString) {
       const params = new URLSearchParams(queryString);
       const search = params.get("search");
+      const category = params.get("category");
+      if (category) {
+        state.activeFilter = category;
+        renderFilters();
+        renderProducts();
+      }
       if (search) {
         state.activeFilter = "all";
         state.searchTerm = search;
@@ -967,6 +1034,10 @@ $(function () {
 
     if (targetHash.startsWith("#product-")) {
       const productId = targetHash.replace("#product-", "");
+      if (!hasShopSection()) {
+        window.location.href = productHref(productId);
+        return;
+      }
       window.setTimeout(() => showProductInShop(productId), 300);
       return;
     }
@@ -980,6 +1051,11 @@ $(function () {
   }
 
   function scrollToShop() {
+    if (!hasShopSection()) {
+      window.location.href = shopHref();
+      return;
+    }
+
     const targetTop = Math.max(0, $("#shop").offset().top - 92);
     $("html, body").stop(true).animate({ scrollTop: targetTop }, 550);
   }
@@ -994,7 +1070,7 @@ $(function () {
   }
 
   function productLink(product) {
-    return `${getPublicBaseUrl()}#product-${product.id}`;
+    return pageUrl(`shop.html#product-${product.id}`);
   }
 
   function getPublicBaseUrl() {
@@ -1004,6 +1080,46 @@ $(function () {
       ? window.location.pathname
       : window.location.pathname.replace(/[^/]*$/, "");
     return `${window.location.origin}${basePath}`;
+  }
+
+  function pageUrl(path = "") {
+    try {
+      return new URL(path || "./", getPublicBaseUrl()).href;
+    } catch (error) {
+      return path || getPublicBaseUrl();
+    }
+  }
+
+  function shopHref(options = {}) {
+    if (options.productId) return `shop.html#product-${encodeURIComponent(options.productId)}`;
+    if (options.search) return `shop.html#shop?search=${encodeURIComponent(options.search)}`;
+    if (options.category) return `shop.html#shop?category=${encodeURIComponent(options.category)}`;
+    return "shop.html#shop";
+  }
+
+  function productHref(productId) {
+    if (!productId) return "shop.html#shop";
+    return hasShopSection() ? `#product-${productId}` : `shop.html#product-${productId}`;
+  }
+
+  function goToShop(options = {}) {
+    if (!hasShopSection()) {
+      window.location.href = shopHref(options);
+      return;
+    }
+
+    if (options.search) {
+      state.activeFilter = "all";
+      state.searchTerm = options.search;
+      syncSearchInputs();
+      renderFilters();
+      renderProducts();
+    }
+    scrollToShop();
+  }
+
+  function hasShopSection() {
+    return $("#shop").length > 0;
   }
 
   function absoluteUrl(path) {
@@ -1060,7 +1176,7 @@ $(function () {
         url: getPublicBaseUrl(),
         potentialAction: {
           "@type": "SearchAction",
-          target: `${getPublicBaseUrl()}#shop?search={search_term_string}`,
+          target: pageUrl("shop.html#shop?search={search_term_string}"),
           "query-input": "required name=search_term_string"
         }
       },
@@ -1075,7 +1191,7 @@ $(function () {
       }
     ];
 
-    if (state.site.faqs?.length) {
+    if (state.page === "faq" && state.site.faqs?.length) {
       graph.push({
         "@type": "FAQPage",
         mainEntity: state.site.faqs.map((item) => ({
@@ -1120,8 +1236,169 @@ $(function () {
 
   function safeHref(href) {
     const value = String(href || "#");
-    if (/^(#|https?:\/\/|mailto:|tel:)/i.test(value)) return escapeHtml(value);
+    if (/^(#|https?:\/\/|mailto:|tel:|\.?\/|[a-z0-9_-]+\.html(?:#.*)?$)/i.test(value)) return escapeHtml(value);
     return "#";
+  }
+
+  function ensureSharedChrome() {
+    if (!$("#loader").length) {
+      $("body").prepend(`
+        <div class="loader" id="loader" aria-hidden="true">
+          <img src="assets/images/brand/nura-logo.JPG" alt="" />
+          <span></span>
+        </div>
+      `);
+    }
+
+    if (!$("#scrollProgress").length) {
+      $("#loader").after('<div class="scroll-progress" id="scrollProgress"></div>');
+    }
+
+    if (!$("#siteHeader").length) {
+      $("#scrollProgress").after(`
+        <header class="site-header" id="siteHeader">
+          <a class="brand-mark" href="index.html" aria-label="NURA home">
+            <img src="assets/images/brand/nura-logo.JPG" alt="NURA logo" />
+          </a>
+
+          <nav class="nav-links" aria-label="Primary navigation">
+            <a href="story.html" data-nav-page="story">Story</a>
+            <a href="shop.html" data-nav-page="shop">Shop</a>
+            <a href="story.html#process" data-nav-page="story">Process</a>
+            <a href="lookbook.html" data-nav-page="lookbook">Lookbook</a>
+            <a href="faq.html" data-nav-page="faq">FAQ</a>
+          </nav>
+
+          <div class="header-actions">
+            <button class="icon-button search-toggle" type="button" aria-label="Open search">
+              <span></span>
+            </button>
+            <button class="cart-button" type="button" id="openCart" aria-label="Open cart">
+              <span class="cart-dot" id="cartCount">0</span>
+              Bag
+            </button>
+            <button class="menu-toggle" type="button" id="menuToggle" aria-label="Open menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </header>
+
+        <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+          <a href="story.html" data-nav-page="story">Story</a>
+          <a href="shop.html" data-nav-page="shop">Shop</a>
+          <a href="story.html#process" data-nav-page="story">Process</a>
+          <a href="lookbook.html" data-nav-page="lookbook">Lookbook</a>
+          <a href="faq.html" data-nav-page="faq">FAQ</a>
+        </aside>
+
+        <div class="search-panel" id="searchPanel" aria-label="Product search">
+          <label for="searchInput">Search NURA pieces</label>
+          <div>
+            <input id="searchInput" type="search" placeholder="Try crystal, bracelet, pendant..." />
+            <button type="button" id="clearSearch">Clear</button>
+          </div>
+        </div>
+      `);
+    }
+
+    if (!$("#siteFooter").length) {
+      $("main").after('<footer class="site-footer" id="siteFooter"></footer>');
+    }
+
+    if (!$("#cartDrawer").length) {
+      $("body").append(`
+        <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping bag">
+          <div class="cart-head">
+            <div>
+              <p class="eyebrow">Your edit</p>
+              <h2>Shopping bag</h2>
+            </div>
+            <button type="button" id="closeCart" aria-label="Close cart">&times;</button>
+          </div>
+          <div class="cart-items" id="cartItems"></div>
+          <div class="cart-total">
+            <span>Total</span>
+            <strong id="cartTotal">₹0</strong>
+          </div>
+          <div class="checkout-panel" id="checkoutPanel">
+            <div class="checkout-heading">
+              <p class="eyebrow">Checkout</p>
+              <h3>India payment options</h3>
+              <p id="checkoutNote">Add your details once. NURA will receive every product link, quantity and total.</p>
+            </div>
+
+            <form class="customer-form" id="checkoutDetails">
+              <label>
+                <span>Name</span>
+                <input id="customerName" type="text" autocomplete="name" placeholder="Customer name" required aria-describedby="customerNameError" />
+                <small class="field-error" id="customerNameError"></small>
+              </label>
+              <label>
+                <span>Phone</span>
+                <input id="customerPhone" type="tel" autocomplete="tel" placeholder="+91 mobile number" pattern="(\\+91[\\s-]?)?[6-9][0-9\\s-]{9,13}" required aria-describedby="customerPhoneError" />
+                <small class="field-error" id="customerPhoneError"></small>
+              </label>
+              <label class="wide">
+                <span>Delivery location</span>
+                <textarea id="customerLocation" rows="3" placeholder="Address, city and state" required aria-describedby="customerLocationError"></textarea>
+                <small class="field-error" id="customerLocationError"></small>
+              </label>
+              <label>
+                <span>Pincode</span>
+                <input id="customerPincode" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="Pincode" pattern="[1-9][0-9]{5}" aria-describedby="customerPincodeError" />
+                <small class="field-error" id="customerPincodeError"></small>
+              </label>
+              <label>
+                <span>Notes</span>
+                <input id="customerNote" type="text" placeholder="Gift note or timing" />
+              </label>
+            </form>
+
+            <div class="payment-grid">
+              <article class="payment-card">
+                <span class="payment-label">1. WhatsApp order</span>
+                <h4>Send order to NURA</h4>
+                <p>Includes customer details, product links, quantity and total amount.</p>
+                <a class="payment-action primary" id="whatsappCheckout" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
+              </article>
+
+              <article class="payment-card upi-card">
+                <span class="payment-label">2. Direct UPI</span>
+                <h4>Scan and pay</h4>
+                <img id="upiQrImage" src="assets/images/payments/upi-qr-placeholder.svg" alt="NURA UPI QR code" />
+                <div class="upi-summary">
+                  <span>Payable total</span>
+                  <strong id="upiTotal">₹0</strong>
+                </div>
+                <p id="upiIdDisplay">Add UPI ID in json/checkout.json before going live.</p>
+                <a class="payment-action" id="upiPayLink" href="#" aria-disabled="true">Open UPI app</a>
+                <a class="payment-action secondary" id="upiConfirmWhatsapp" href="#" target="_blank" rel="noopener">Confirm on WhatsApp</a>
+              </article>
+            </div>
+          </div>
+        </aside>
+        <div class="page-scrim" id="pageScrim"></div>
+
+        <dialog class="quick-view" id="quickView">
+          <button class="modal-close" type="button" id="closeQuickView" aria-label="Close quick view">&times;</button>
+          <div class="quick-view-body" id="quickViewBody"></div>
+        </dialog>
+
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      `);
+    }
+  }
+
+  function markActiveNavigation() {
+    const currentHash = window.location.hash || "";
+    $("[data-nav-page]").each(function () {
+      const href = String($(this).attr("href") || "");
+      const hrefHash = href.includes("#") ? `#${href.split("#")[1]}` : "";
+      const matchesPage = $(this).data("nav-page") === state.page;
+      $(this).toggleClass("active", matchesPage && (!hrefHash || hrefHash === currentHash));
+    });
   }
 
   function readStorage(key, fallback) {
