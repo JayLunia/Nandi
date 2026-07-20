@@ -2,7 +2,7 @@
 
 NURA is a contemporary boho crystal jewellery brand built around wearable meaning, real product photography, gifting, and everyday styling. This repository contains a static multi-page ecommerce display website for NURA with editable JSON content, product search, product filters, a persistent cart, WhatsApp order checkout, and India UPI payment readiness.
 
-The project is intentionally built without Node or a build step. It uses HTML, CSS, Bootstrap, jQuery, and JSON so it can be hosted directly on GitHub Pages.
+The project is intentionally built without Node or a build step. It uses HTML, CSS, Bootstrap, jQuery, and local JavaScript data files so it can be hosted directly on GitHub Pages without relying on JSON fetches from the browser.
 
 ## Live Site
 
@@ -43,7 +43,10 @@ The project is intentionally built without Node or a build step. It uses HTML, C
 │   └── style.css
 ├── js/
 │   ├── jquery-3.7.1.min.js
-│   └── main.js
+│   ├── main.js
+│   ├── site-data.js
+│   ├── products-data.js
+│   └── checkout-data.js
 ├── json/
 │   ├── site.json
 │   ├── products.json
@@ -121,9 +124,7 @@ Until the real UPI ID is added, the direct UPI button stays disabled.
 
 ## Local Preview
 
-Do not double-click `index.html`. Browsers can block JSON fetches from local files.
-
-Use any static server. For example:
+The site is designed to work locally without a server because the content is bundled into JavaScript files. You can still preview it with a simple static server if you want:
 
 ```bash
 python3 -m http.server 8000
@@ -145,8 +146,10 @@ Current Pages source for this repository:
 
 ```text
 Branch: main
-Folder: /
+Folder: /docs
 ```
+
+The repository also includes a GitHub Actions workflow in `.github/workflows/pages.yml` that publishes the contents of the `docs/` folder automatically.
 
 The `gh-pages` branch is also kept updated with the same static site files. You can switch Pages to this branch later if you prefer a dedicated publishing branch:
 

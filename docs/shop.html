@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Browse the NURA jewellery shop for crystal-led necklaces, bracelets, earrings, pendants, rings and curated gift-ready pieces with WhatsApp and UPI checkout options."
+    />
+    <meta
+      name="keywords"
+      content="shop NURA jewellery, boho crystal necklaces, crystal bracelets India, crystal earrings, pendant jewellery, NURA cart"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#330025" />
+    <link rel="canonical" href="https://jaylunia.github.io/Nandi/shop.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Shop NURA Jewellery | Boho Crystal Necklaces, Bracelets and Earrings" />
+    <meta
+      property="og:description"
+      content="Shop NURA crystal-led jewellery with product search, category filters, a persistent bag, WhatsApp ordering and India UPI payment support."
+    />
+    <meta property="og:url" content="https://jaylunia.github.io/Nandi/shop.html" />
+    <meta property="og:image" content="https://jaylunia.github.io/Nandi/assets/images/brand/nura-logo.JPG" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="assets/images/brand/favicon.svg" />
+    <title>Shop NURA Jewellery | Boho Crystal Necklaces, Bracelets and Earrings</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/jquery-3.7.1.min.js" defer></script>
+    <script src="js/site-data.js" defer></script>
+    <script src="js/products-data.js" defer></script>
+    <script src="js/checkout-data.js" defer></script>
+    <script src="js/main.js" defer></script>
+  </head>
+  <body class="shop-page" data-page="shop">
+    <main>
+      <section class="page-hero" id="shopTop">
+        <div
+          class="page-hero-bg"
+          style="background-image: url('assets/images/products/7bac9b3f-d4c6-4c7b-b6d9-d603f362c15d.JPG')"
+        ></div>
+        <div class="page-hero-content reveal">
+          <p class="eyebrow">Shop NURA jewellery</p>
+          <h1>Explore crystal-led jewellery by category, mood and moment.</h1>
+          <p>
+            Browse necklaces, bracelets, earrings, rings, pendants and curated sets. Every product card is managed from
+            JSON so pricing, copy, images and availability can be updated without changing the layout.
+          </p>
+          <div class="page-hero-actions">
+            <a class="primary-link" href="#shop">View all products</a>
+            <a class="secondary-link" href="faq.html">How ordering works</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="shop-section section-shell" id="shop">
+        <div class="section-heading reveal">
+          <p class="eyebrow">NURA catalogue</p>
+          <h2>Boho crystal pieces for daily wear, gifting and special occasions.</h2>
+        </div>
+
+        <div class="shop-toolbar reveal">
+          <div class="filter-pills" id="filterPills" aria-label="Product filters"></div>
+          <div class="shop-controls">
+            <label class="sr-only" for="shopSearchInput">Search products</label>
+            <input
+              class="form-control shop-search"
+              id="shopSearchInput"
+              type="search"
+              placeholder="Search products"
+            />
+            <select class="form-select" id="sortProducts" aria-label="Sort products">
+              <option value="featured">Featured</option>
+              <option value="price-low">Price low to high</option>
+              <option value="price-high">Price high to low</option>
+              <option value="name">Name A to Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+      </section>
+    </main>
+  </body>
+</html>
